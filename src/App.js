@@ -3,7 +3,9 @@ import './App.css';
 
 import { Layout, Button } from 'antd';
 import NavBar from "./components/navbar/NavBar";
-
+import UserList from './views/admin/UserList';
+import LineChart from './views/admin/LineChart';
+import DoughnutChart from './views/admin/DoughnutChart';
 const { Header, Content, Footer } = Layout;
 const App = () => (
     <div className="App">
@@ -17,6 +19,9 @@ const App = () => (
 
           </div>
         </Content>
+        <UserList />
+        <LineChart />
+        <DoughnutChart />
         <Footer className="footer">Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
     </div>
