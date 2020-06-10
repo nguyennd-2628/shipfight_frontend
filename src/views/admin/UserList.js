@@ -3,7 +3,6 @@ import { Table, Space, Typography, Input, Button } from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-const { Search } = Input;
 const { Title } = Typography;
 
 class UserList extends Component {
@@ -130,22 +129,17 @@ class UserList extends Component {
         ];
         
         const { users, pagination, loading } = this.state;
-        return (
-            <div>
-                
-                <div className="site-layout-content">
-                    <Title>User List</Title>
-                    <Table
-                        columns={columns}
-                        dataSource={users}
-                        pagination={pagination}
-                        loading={loading}
-                        onChange={this.handleTableChange}
-                    />
-                </div>
-
+        return (             
+            <div className="site-layout-content">
+                <Title>User List</Title>
+                <Table
+                    columns={columns}
+                    dataSource={users}
+                    pagination={pagination}
+                    loading={loading}
+                    onChange={this.handleTableChange}
+                />
             </div>
-
         );
     }
 }
