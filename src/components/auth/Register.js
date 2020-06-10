@@ -68,6 +68,7 @@ class Register extends Component {
       axios.post("https://battle-ship-back-end-2020.herokuapp.com/users",data)
       .then((res)=>{
         console.log(res)
+        console.log("Register Suceess !!!")
       })
       .catch((err)=>{
         console.log(err)

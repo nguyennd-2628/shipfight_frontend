@@ -35,6 +35,7 @@ class Login extends Component {
         axios.post('https://battle-ship-back-end-2020.herokuapp.com/auth/login',data)
         .then((res)=>{
             console.log("response: ", res)
+            alert("login success !!!")
         })
         .catch((err)=>{
             console.log("ERROR :" ,err)
