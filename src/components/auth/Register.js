@@ -1,54 +1,94 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Upload, Button, Icon, Form, Input, InputNumber } from 'antd';
+import { Button, Form, Input } from 'antd';
+import axios from 'axios';
 
 class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      fileList: []
+      email: "",
+      password: "",
+      repassword: "",
+      name: "",
+      avartar_url: ""
     }
   }
-  onFinish = values => {
-    console.log(values);
-  };
-  Register = () => {
-    const { pass, repass } = this.state
-    if (pass == repass) {
-      console.log('OKKK Pass')
-    } else console.log('Err Pass')
+
+  onChangeEmail = (e) => {
+    this.setState({
+      email: e.target.value
+    })
   }
-  toggleDataSeries = (e) => {
-		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-			e.dataSeries.visible = false;
-		}
-		else{
-			e.dataSeries.visible = true;
-		}
-		this.chart.render();
-	}
+
+  onChangePassword = (e) => {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  onChangeRePassword = (e) => {
+    this.setState({
+      repassword: e.target.value
+    })
+  }
+  onChangeNickName = (e) => {
+    this.setState({
+      name: e.target.value
+    })
+  }
+
+  onChangeAvartar = (e) => {
+    this.setState({
+      avartar_url: e.target.value
+    })
+  }
+
+  onSubmit = (e) => {
+    if(this.state.password != this.state.repassword){
+      alert("password and confirm password is not correct")
+    }
+    else{
+      var data
+      if(this.state.avartar_url == ''){
+        data = {
+          email : this.state.email,
+          password : this.state.password,
+          name : this.state.name,
+        }
+      }
+      else{
+        data = {
+          email : this.state.email,
+          password : this.state.password,
+          name : this.state.name,
+          avartar_url : this.state.avartar_url
+        }
+      }
+      axios.post("https://battle-ship-back-end-2020.herokuapp.com/users",data)
+      .then((res)=>{
+        console.log(res)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+      
+    }
+  }
   render() {
     const layout = {
       labelCol: { span: 8 },
       wrapperCol: { span: 16 },
     };
-    const { pass, repass } = this.state
     return (
       <div>
-        <Form {...layout} name="nest-messages" onFinish={this.onFinish} >
-          <Form.Item
-            label="Name"
-            name="Name"
-            rules={[{ required: true, message: 'Please input your Name!' }]}
-          >
-            <Input />
-          </Form.Item>
+        <Form {...layout} name="nest-messages" >
           <Form.Item
             label="Email"
             name="Email"
             rules={[{ required: true, message: 'Please input your Email!' }]}
           >
-            <Input />
+            <Input onChange={this.onChangeEmail} />
           </Form.Item>
           <Form.Item
             label="Password"
@@ -56,33 +96,39 @@ class Register extends Component {
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <Input.Password
-              value={pass}
-              onChange={(element) => this.setState({ pass: element.currentTarget.value })}
+              //   value={pass}
+              onChange={this.onChangePassword}
             />
           </Form.Item>
           <Form.Item
-            label="Xác nh?n Password"
-            name="Xác nh?n password"
+            label="Confirm Password"
+            name="Confirm password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <Input.Password
-              value={repass}
-              onChange={(element) => this.setState({ repass: element.currentTarget.value })}
+              //   value={repass}
+              onChange={this.onChangeRePassword}
             />
           </Form.Item>
+
+          <Form.Item
+            label="Nick name"
+            name="Name"
+            rules={[{ required: true, message: 'Please input your nick name!' }]}
+          >
+            <Input onChange={this.onChangeNickName} />
+          </Form.Item>
+
           <Form.Item
             label="Url Image"
             name="Url Image"
-            rules={[{ required: true, message: 'Please input your Url Image!' }]}
           >
-            <Input />
+            <Input onChange={this.onChangeAvartar} />
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit"
-              onClick={this.Register}
-            >
+            <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
               Submit
-        </Button>
+            </Button >
           </Form.Item>
         </Form>
       </div>

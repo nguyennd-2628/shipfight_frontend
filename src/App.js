@@ -13,7 +13,7 @@ const App = () => (
         <NavBar />
         <Content className='main'>
           <div className="site-layout-content">
-              <Login />
+              {/* <Login /> */}
               <Register />
           </div>
         </Content>
