@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Table, Space, Typography, Input, Button } from 'antd';
+import {Table, Space, Typography, Input, Button, Layout} from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import '../../App.css';
+import NavBarAdmin from "../../components/navbar-admin/NavBarAdmin";
+
 const { Search } = Input;
 const { Title } = Typography;
+const { Header, Content, Footer } = Layout;
 
 class UserList extends Component {
     state = {
@@ -37,7 +41,7 @@ class UserList extends Component {
 
     handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
-        this.setState({ 
+        this.setState({
             searchText: selectedKeys[0],
             searchedColumn: dataIndex,
         });
@@ -51,7 +55,7 @@ class UserList extends Component {
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8}}>
-                <Input 
+                <Input
                     ref={node => {
                         this.searchInput = node;
                     }}
@@ -128,24 +132,25 @@ class UserList extends Component {
                 )
             }
         ];
-        
+
         const { users, pagination, loading } = this.state;
+
         return (
-            <div>
-                
-                <div className="site-layout-content">
-                    <Title>User List</Title>
-                    <Table
-                        columns={columns}
-                        dataSource={users}
-                        pagination={pagination}
-                        loading={loading}
-                        onChange={this.handleTableChange}
-                    />
-                </div>
-
-            </div>
-
+            <Layout className="layout">
+                <NavBarAdmin />
+                <Content className='main'>
+                    <div className="site-layout-content">
+                        <Title>User List</Title>
+                        <Table
+                            columns={columns}
+                            dataSource={users}
+                            pagination={pagination}
+                            loading={loading}
+                            onChange={this.handleTableChange}
+                        />
+                    </div>
+                </Content>
+            </Layout>
         );
     }
 }
