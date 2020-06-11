@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Layout, Row, Col, Form, Input, InputNumber, Button } from 'antd';
+import {Typography, Layout, Row, Col, Form, Input, InputNumber, Button, notification} from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
@@ -59,10 +59,15 @@ class ProfileEdit extends Component {
     };
 
     onSubmit = (e) => {
-        if(this.state.password != this.state.repassword){
-            alert("password and confirm password is not correct")
+        if(this.state.password != this.state.repassword) {
+            notification.open({
+                type: 'error',
+                message: 'Error',
+                description: 'Confirm password incorrect',
+                duration: 2
+            });
         }
-        else{
+        else if (this.state.password !== '' && this.state.repassword !== '') {
             var data;
             if(this.state.avartar_url == ''){
                 data = {
@@ -79,16 +84,27 @@ class ProfileEdit extends Component {
                     avartar_url : this.state.avartar_url
                 }
             }
-            axios.post("https://battle-ship-back-end-2020.herokuapp.com/users",data)
+            axios.put("https://battle-ship-back-end-2020.herokuapp.com/users",data)
                 .then((res)=>{
-                    console.log(res);
-                    console.log("Register Suceess !!!");
+                    // console.log(res);
+                    // console.log("Register Suceess !!!");
+                    notification.open({
+                        type: 'success',
+                        message: 'Success',
+                        description: 'Update Data Success',
+                        duration: 2
+                    });
                     this.setState({
                         registerSuccess: true
                     })
                 })
                 .catch((err)=>{
-                    console.log(err)
+                    notification.open({
+                        type: 'error',
+                        message: 'Incorrect Data',
+                        description: 'Please try again!',
+                        duration: 2
+                    });
                 })
 
         }
@@ -105,8 +121,9 @@ class ProfileEdit extends Component {
                                 label="Email"
                                 name="Email"
                                 rules={[{ required: true, message: 'Please input your Email!' }]}
+                                initialValue={'trihieua2@gmail.com'}
                             >
-                                <Input onChange={this.onChangeEmail} />
+                                <Input onChange={this.onChangeEmail} disabled={true}/>
                             </Form.Item>
                             <Form.Item
                                 label="Password"
@@ -133,6 +150,7 @@ class ProfileEdit extends Component {
                                 label="Nick name"
                                 name="Name"
                                 rules={[{ required: true, message: 'Please input your nick name!' }]}
+                                initialValue={'Tri Hieu'}
                             >
                                 <Input onChange={this.onChangeNickName} />
                             </Form.Item>
@@ -140,6 +158,7 @@ class ProfileEdit extends Component {
                             <Form.Item
                                 label="Url Image"
                                 name="Url Image"
+                                initialValue={'https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png'}
                             >
                                 <Input onChange={this.onChangeAvartar} />
                             </Form.Item>

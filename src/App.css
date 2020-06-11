@@ -52,3 +52,7 @@
   padding: 100px 100px;
   background-color: #E0E0E0;
 }
+
+.navbar {
+  z-index: 100;
+}

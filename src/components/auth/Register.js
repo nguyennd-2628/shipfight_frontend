@@ -4,6 +4,7 @@ import {Button, Form, Input, Layout, notification} from 'antd';
 import axios from 'axios';
 import NavBar from "../navbar/NavBar";
 import { Redirect } from "react-router-dom";
+import NavBarLogin from "../navbar-login/NavBarLogin";
 
 const { Header, Content, Footer } = Layout;
 
@@ -57,8 +58,12 @@ class Register extends Component {
   };
   onSubmit = (e) => {
     if(this.state.password != this.state.repassword){
-      alert("password and confirm password is not correct")
-    }
+      notification.open({
+        type: 'error',
+        message: 'Error',
+        description: 'Confirm password incorrect',
+        duration: 2
+      });    }
     else{
       var data;
       if(this.state.avartar_url == ''){
@@ -108,7 +113,8 @@ class Register extends Component {
     };
     return (
         <Layout className="layout">
-          <NavBar />
+          {/*<NavBar />*/}
+          <NavBarLogin />
           <Content className='main'>
             <div className="site-layout-content">
             <Form {...layout} name="nest-messages" >
