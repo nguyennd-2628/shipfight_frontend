@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Button, Form, Input } from 'antd';
+import {Button, Form, Input, Layout, notification} from 'antd';
 import axios from 'axios';
+import NavBar from "../navbar/NavBar";
+import { Redirect } from "react-router-dom";
+
+const { Header, Content, Footer } = Layout;
 
 class Register extends Component {
   constructor(props) {
@@ -11,7 +15,9 @@ class Register extends Component {
       password: "",
       repassword: "",
       name: "",
-      avartar_url: ""
+      avartar_url: "",
+      registerSuccess: false,
+      clickedCancel: false
     }
   }
 
@@ -19,37 +25,42 @@ class Register extends Component {
     this.setState({
       email: e.target.value
     })
-  }
+  };
 
   onChangePassword = (e) => {
     this.setState({
       password: e.target.value
     })
-  }
+  };
 
   onChangeRePassword = (e) => {
     this.setState({
       repassword: e.target.value
     })
-  }
+  };
   onChangeNickName = (e) => {
     this.setState({
       name: e.target.value
     })
-  }
+  };
 
   onChangeAvartar = (e) => {
     this.setState({
       avartar_url: e.target.value
     })
-  }
+  };
 
+  onCancel = () => {
+    this.setState({
+      clickedCancel: true
+    })
+  };
   onSubmit = (e) => {
     if(this.state.password != this.state.repassword){
       alert("password and confirm password is not correct")
     }
     else{
-      var data
+      var data;
       if(this.state.avartar_url == ''){
         data = {
           email : this.state.email,
@@ -67,23 +78,40 @@ class Register extends Component {
       }
       axios.post("https://battle-ship-back-end-2020.herokuapp.com/users",data)
       .then((res)=>{
-        console.log(res)
-        console.log("Register Suceess !!!")
+        notification.open({
+          type: 'success',
+          message: 'Create account success',
+          description: 'Please log in!',
+          duration: 2
+        });
+        this.setState({
+          registerSuccess: true
+        })
       })
       .catch((err)=>{
-        console.log(err)
+        console.log(err);
+        notification.open({
+          type: 'error',
+          message: 'Error',
+          description: 'Please try again!',
+          duration: 2
+        });
       })
-      
+
     }
-  }
+  };
+
   render() {
     const layout = {
       labelCol: { span: 8 },
       wrapperCol: { span: 16 },
     };
     return (
-      <div>
-        <Form {...layout} name="nest-messages" >
+        <Layout className="layout">
+          <NavBar />
+          <Content className='main'>
+            <div className="site-layout-content">
+            <Form {...layout} name="nest-messages" >
           <Form.Item
             label="Email"
             name="Email"
@@ -130,9 +158,17 @@ class Register extends Component {
             <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
               Submit
             </Button >
+            <Button type="primary" htmlType="submit" onClick={this.onCancel}>
+              Cancel
+            </Button >
           </Form.Item>
         </Form>
-      </div>
+            </div>
+          </Content>
+          {
+            this.state.registerSuccess || this.state.clickedCancel ? <Redirect to={{ pathname: '/login'}} /> : null
+          }
+        </Layout>
     )
   }
 }

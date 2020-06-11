@@ -1,0 +1,10 @@
+.student-view--title div {
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+    margin: 20px 20px;
+}
+
+.student-view--info div {
+    margin: 20px 20px;
+}

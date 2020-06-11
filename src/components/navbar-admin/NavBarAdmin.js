@@ -8,35 +8,16 @@ import {
     GitlabOutlined,
     CaretDownOutlined,
 } from '@ant-design/icons';
-import './NavBar.css';
-
-const routes = [
-    {
-        path: "/",
-        exact: true,
-        sidebar: () => <div>home!</div>,
-        main: () => <h2>Home</h2>
-    },
-    {
-        path: "/bubblegum",
-        sidebar: () => <div>bubblegum!</div>,
-        main: () => <h2>Bubblegum</h2>
-    },
-    {
-        path: "/shoelaces",
-        sidebar: () => <div>shoelaces!</div>,
-        main: () => <h2>Shoelaces</h2>
-    }
-];
+import './NavBarAdmin.css';
 
 const menu = (handleLogOut) => (
     <Menu>
         <Menu.Item key='1'>
-            <Link to='/profile'>
+            {/*<Link to='/profile'>*/}
                 <Button type='link'>
                     Profile
                 </Button>
-            </Link>
+            {/*</Link>*/}
         </Menu.Item>
         <Menu.Item key='2'>
             <Button type='link' onClick={handleLogOut}>
@@ -46,9 +27,9 @@ const menu = (handleLogOut) => (
     </Menu>
 );
 
-class NavBar extends Component {
+class NavBarAdmin extends Component {
     handleLogout = () => {
-    };
+    }
 
     render() {
         return (
@@ -62,17 +43,28 @@ class NavBar extends Component {
                     <GitlabOutlined />
                     Ship Fight
                 </Menu.Item>
-
                 <Menu.Item key="home" style={{float: 'left'}}>
                     <EditOutlined />
-                    <Link exact to="/">
+                    <Link to="/">
                     Home
+                </Link>
+                </Menu.Item>
+                <Menu.Item key="user-list" style={{float: 'left'}}>
+                    <UserOutlined />
+                    <Link to="/admin/user-list">
+                        Users
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="about-us" style={{float: 'left'}}>
+                <Menu.Item key="player-statistic" style={{float: 'left'}}>
                     <UserOutlined />
-                    <Link exact to="/">
-                        About Us
+                    <Link to="/admin/player-statistic">
+                        Player Statistic
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="play-time-statistic" style={{float: 'left'}}>
+                    <UserOutlined />
+                    <Link to="/admin/play-time-statistic">
+                        Play-time Statistic
                     </Link>
                 </Menu.Item>
                 <Dropdown
@@ -91,10 +83,9 @@ class NavBar extends Component {
                         <CaretDownOutlined />
                     </a>
                 </Dropdown>
-                {}
             </Menu>
         );
     }
 }
 
-export default NavBar;
+export default NavBarAdmin;
