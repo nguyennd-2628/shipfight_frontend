@@ -1,0 +1,11 @@
+
+.ant-btn:empty {
+    width: 60px;
+    visibility: visible;
+    content: '\a0';
+}
+
+.ant-btn {
+    width: 60px;
+    height: 60px;
+}

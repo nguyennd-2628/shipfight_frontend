@@ -9,6 +9,7 @@ import Profile from "../components/profile/Profile";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
 import Ranking from "../components/rankings/Ranking";
+import Board from "../views/user/game-play/Board";
 
 const Routes = () => (
     <Switch>
@@ -41,6 +42,9 @@ const Routes = () => (
         </Route>
         <Route path='/ranking'>
             <Ranking />
+        </Route>
+        <Route path='/game-play'>
+            <Board />
         </Route>
         <Route path='/'>
             <App />
