@@ -8,7 +8,7 @@ import {
     GitlabOutlined,
     CaretDownOutlined,
 } from '@ant-design/icons';
-import './NavBar.css';
+import './NavBarAdmin.css';
 
 const menu = (handleLogOut) => (
     <Menu>
@@ -20,7 +20,7 @@ const menu = (handleLogOut) => (
             </Link>
         </Menu.Item>
         <Menu.Item key='2'>
-            <Link to='/login'>
+            <Link to={'/login'}>
             <Button type='link' onClick={handleLogOut}>
                 Log Out
             </Button>
@@ -29,9 +29,9 @@ const menu = (handleLogOut) => (
     </Menu>
 );
 
-class NavBar extends Component {
+class NavBarAdmin extends Component {
     handleLogout = () => {
-    };
+    }
 
     render() {
         return (
@@ -45,17 +45,28 @@ class NavBar extends Component {
                     <GitlabOutlined />
                     Ship Fight
                 </Menu.Item>
-
                 <Menu.Item key="home" style={{float: 'left'}}>
                     <EditOutlined />
-                    <Link exact to="/">
+                    <Link to="/">
                     Home
+                </Link>
+                </Menu.Item>
+                <Menu.Item key="user-list" style={{float: 'left'}}>
+                    <UserOutlined />
+                    <Link to="/admin/user-list">
+                        Users
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="about-us" style={{float: 'left'}}>
+                <Menu.Item key="player-statistic" style={{float: 'left'}}>
                     <UserOutlined />
-                    <Link exact to="/">
-                        About Us
+                    <Link to="/admin/player-statistic">
+                        Player Statistic
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="play-time-statistic" style={{float: 'left'}}>
+                    <UserOutlined />
+                    <Link to="/admin/play-time-statistic">
+                        Play-time Statistic
                     </Link>
                 </Menu.Item>
                 <Dropdown
@@ -68,16 +79,15 @@ class NavBar extends Component {
                     <a className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
                         <span className='header__avatar--name'>
-                            <span className='header__avatar--user'>Tri Hieu</span>
+                            <span className='header__avatar--user'>Nghia Ta Hai</span>
                             <span className='header__avatar--rank'>1000</span>
                         </span>
                         <CaretDownOutlined />
                     </a>
                 </Dropdown>
-                {}
             </Menu>
         );
     }
 }
 
-export default NavBar;
+export default NavBarAdmin;

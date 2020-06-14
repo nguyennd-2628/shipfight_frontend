@@ -8,14 +8,14 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const { Header, Content, Footer } = Layout;
 
-class LineChart extends Component {
+class PlayTimeStatistic extends Component {
 	render() {
 		const options = {
 			animationEnabled: true,
 			exportEnabled: true,
 			theme: "light2", // "light1", "dark1", "dark2"
 			title:{
-				text: "Total players registered"
+				text: "Play Time Statistic (hour)"
 			},
 			axisY: {
 				title: "Amount",
@@ -65,4 +65,4 @@ class LineChart extends Component {
 	}
 }
 
-export default LineChart;
+export default PlayTimeStatistic;
