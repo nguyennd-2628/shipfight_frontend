@@ -84,6 +84,7 @@ class Register extends Component {
           description: 'Please log in!',
           duration: 2
         });
+        localStorage.setItem("email",data.email)
         this.setState({
           registerSuccess: true
         })

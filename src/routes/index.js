@@ -8,6 +8,7 @@ import PlayTimeStatistic from "../views/admin/PlayTimeStatistic";
 import Profile from "../components/profile/Profile";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
+import axios from 'axios'
 
 const Routes = () => (
     <Switch>
@@ -27,7 +28,6 @@ const Routes = () => (
             <LineChart />
         </Route>
 
-
         <Route path='/admin/play-time-statistic'>
             <PlayTimeStatistic />
         </Route>
@@ -40,12 +40,10 @@ const Routes = () => (
             <ProfileEdit />
         </Route>
 
-
-
-
         <Route path='/'>
             <App />
         </Route>
+
         {/*/!* Dashboard *!/*/}
         {/*<AuthenticatedRoute*/}
         {/*    exact*/}

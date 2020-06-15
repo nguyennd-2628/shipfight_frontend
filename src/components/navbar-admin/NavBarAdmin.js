@@ -29,6 +29,9 @@ const menu = (handleLogOut) => (
 
 class NavBarAdmin extends Component {
     handleLogout = () => {
+        localStorage.removeItem("email")
+        localStorage.removeItem("isAdmin")
+        window.location.reload('/login')
     }
 
     render() {
@@ -72,7 +75,7 @@ class NavBarAdmin extends Component {
                     className='header__avatar'
                     // getPopupContainer={() => document.querySelector('.header__avatar')}
                     // trigger='click'
-                    overlay={menu(this.handleLogout())}
+                    overlay={menu(this.handleLogout)}
                 >
                     <a className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
