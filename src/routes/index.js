@@ -8,6 +8,7 @@ import PlayTimeStatistic from "../views/admin/PlayTimeStatistic";
 import Profile from "../components/profile/Profile";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
+import Ranking from "../components/rankings/Ranking";
 
 const Routes = () => (
     <Switch>
@@ -38,6 +39,10 @@ const Routes = () => (
 
         <Route path='/profile-edit'>
             <ProfileEdit />
+        </Route>
+
+        <Route path='/ranking'>
+            <Ranking />
         </Route>
 
 
