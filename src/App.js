@@ -19,7 +19,7 @@ class App extends Component {
     let isAdmin = true;
     const email = localStorage.getItem("email")
     const adminToken = localStorage.getItem("isAdmin")
-    
+
     if (email == null) {
         loggedIn = false
     }
@@ -30,11 +30,11 @@ class App extends Component {
       loggedIn,
       isAdmin,
       email
-    }
+    };
 
     if (loggedIn) socket.emit('c2s_online_alert', email);
   }
-  
+
   render() {
     if(!this.state.loggedIn){
       return <Redirect  to='/login' />
@@ -58,17 +58,17 @@ class App extends Component {
                 <Button type="primary" block>
                     Fight with Bot
                 </Button>
-								<Link to='/Ranking'>
-                  <Button type='primary'>
+                <Link to='/Ranking'>
+                    <Button type='primary' block>
                         Ranking
-                   </Button>
+                    </Button>
               	</Link>
                 <Help />
             </div>
             <HasInvite socket={socket} />
           </Content>
         </Layout>
-       
+
       </div>
     )
   }

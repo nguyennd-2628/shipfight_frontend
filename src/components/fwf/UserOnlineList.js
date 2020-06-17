@@ -65,11 +65,11 @@ class UserOnlineList extends Component {
     render() {
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>
+                <Button type="primary" onClick={this.showModal} block>
                     Fight with friends
                 </Button>
                 <Modal
-                    title="User"
+                    title="Online User"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
