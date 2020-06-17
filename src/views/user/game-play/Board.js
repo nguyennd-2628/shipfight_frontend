@@ -287,13 +287,11 @@ class Board extends Component {
         return (
             <Layout className="layout">
                 <NavBar />
-                <Content className='main'>
-                    <div className="site-layout-content">
-                        <div>
-                            <Row style={{height:50}}><h1 className="announce">{announce}</h1></Row>
-                            <Row style={{height:50}}><h2 className="status">{status}</h2></Row>
-                            {this.renderBoard(squares)}
-                        </div>
+                <Content className='game-play'>
+                    <div>
+                        <Row style={{height: 50}}><h1 className="announce">{announce}</h1></Row>
+                        <Row style={{height: 50}}><h2 className="status">{status}</h2></Row>
+                        {this.renderBoard(squares)}
                     </div>
                 </Content>
             </Layout>
