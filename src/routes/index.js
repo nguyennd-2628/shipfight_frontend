@@ -9,6 +9,7 @@ import Profile from "../components/profile/Profile";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
 import axios from 'axios'
+import Ranking from "../components/rankings/Ranking";
 
 const Routes = () => (
     <Switch>
@@ -39,7 +40,9 @@ const Routes = () => (
         <Route path='/profile-edit'>
             <ProfileEdit />
         </Route>
-
+        <Route path='/ranking'>
+            <Ranking />
+        </Route>
         <Route path='/'>
             <App />
         </Route>

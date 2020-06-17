@@ -8,7 +8,7 @@ import {
     GitlabOutlined,
     CaretDownOutlined,
 } from '@ant-design/icons';
-import './NavBar.css';
+import './NavBarLogin.css';
 
 const menu = (handleLogOut) => (
     <Menu>
@@ -29,11 +29,8 @@ const menu = (handleLogOut) => (
     </Menu>
 );
 
-class NavBar extends Component {
+class NavBarLogin extends Component {
     handleLogout = () => {
-        localStorage.removeItem("email")
-        localStorage.removeItem("isAdmin")
-        window.location.reload('/login')
     };
 
     render() {
@@ -61,26 +58,9 @@ class NavBar extends Component {
                         About Us
                     </Link>
                 </Menu.Item>
-                <Dropdown
-                    // overlay={menu(handleLogOut, t)}
-                    className='header__avatar'
-                    // getPopupContainer={() => document.querySelector('.header__avatar')}
-                    // trigger='click'
-                    overlay={menu(this.handleLogout)}
-                >
-                    <a className='ant-dropdown-link'>
-                        <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
-                        <span className='header__avatar--name'>
-                            <span className='header__avatar--user'>Tri Hieu</span>
-                            <span className='header__avatar--rank'>1000</span>
-                        </span>
-                        <CaretDownOutlined />
-                    </a>
-                </Dropdown>
-                {}
             </Menu>
         );
     }
 }
 
-export default NavBar;
+export default NavBarLogin;

@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import axios from "axios"
 import NavBar from "../navbar/NavBar";
 import '../../App.css'
+import NavBarLogin from "../navbar-login/NavBarLogin";
 
 const { Header, Content, Footer } = Layout;
 
@@ -104,7 +105,8 @@ class Login extends Component {
         
         return (
             <Layout className="layout">
-                <NavBar />
+                {/*<NavBar />*/}
+                <NavBarLogin />
                 <Content className='main'>
                     <div className="site-layout-content">
                         <Form
@@ -130,7 +132,6 @@ class Login extends Component {
                             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
                                 <Checkbox>Remember me</Checkbox>
                             </Form.Item>
-
                             <Form.Item {...tailLayout}>
                                 <Button type="primary" htmlType="submit" onClick={this.onCommit}>
                                     Submit

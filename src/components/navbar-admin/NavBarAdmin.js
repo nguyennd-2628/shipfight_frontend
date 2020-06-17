@@ -13,16 +13,18 @@ import './NavBarAdmin.css';
 const menu = (handleLogOut) => (
     <Menu>
         <Menu.Item key='1'>
-            {/*<Link to='/profile'>*/}
+            <Link to='/profile'>
                 <Button type='link'>
                     Profile
                 </Button>
-            {/*</Link>*/}
+            </Link>
         </Menu.Item>
         <Menu.Item key='2'>
+            <Link to={'/login'}>
             <Button type='link' onClick={handleLogOut}>
                 Log Out
             </Button>
+            </Link>
         </Menu.Item>
     </Menu>
 );
@@ -80,7 +82,7 @@ class NavBarAdmin extends Component {
                     <a className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
                         <span className='header__avatar--name'>
-                            <span className='header__avatar--user'>Tri Hieu</span>
+                            <span className='header__avatar--user'>Nghia Ta Hai</span>
                             <span className='header__avatar--rank'>1000</span>
                         </span>
                         <CaretDownOutlined />

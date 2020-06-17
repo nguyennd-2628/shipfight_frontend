@@ -54,9 +54,11 @@ class App extends Component {
               <Button type="primary" block>
                 Fight with Bot
               </Button>
-              <Button type="primary" block>
-                Ranking
-              </Button>
+              <Link to='/Ranking'>
+                  <Button type='primary'>
+                        Ranking
+                   </Button>
+              </Link>
               <Button type="primary" block>
                 Help
               </Button>
