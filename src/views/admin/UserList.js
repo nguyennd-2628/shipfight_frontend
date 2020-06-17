@@ -3,20 +3,42 @@ import {Table, Space, Typography, Input, Button, Layout} from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import '../../App.css';
+import NavBarAdmin from "../../components/navbar-admin/NavBarAdmin";
+import {Redirect} from 'react-router-dom'
+
+const { Search } = Input;
 const { Title } = Typography;
 const { Header, Content, Footer } = Layout;
 
 class UserList extends Component {
-    state = {
-        users: [],
-        pagination: {
-            current: 1,
-            pageSize: 10,
-        },
-        loading: false,
-        searchText: '',
-        searchedColumn: ''
-    };
+    constructor(props){
+        super(props);
+        let loggedIn  = true;
+        let isAdmin = true;
+        const email = localStorage.getItem("email")
+        const adminToken = localStorage.getItem("isAdmin")
+        if(email == null){
+            loggedIn = false
+        }
+        if(adminToken == null ){
+            isAdmin = false
+        }
+        this.state = {
+            email: "",
+            password: "",
+            loggedIn,
+            isAdmin,
+            users: [],
+            pagination: {
+                current: 1,
+                pageSize: 10,
+            },
+            loading: false,
+            searchText: '',
+            searchedColumn: ''    
+        }
+    }
 
     componentDidMount() {
         axios.get(`https://battle-ship-back-end-2020.herokuapp.com/users`)
@@ -94,6 +116,14 @@ class UserList extends Component {
     });
 
     render() {
+
+        if(!this.state.loggedIn){
+            return <Redirect  to='/login' />
+        }
+        else if(!this.state.isAdmin){
+            return <Redirect to={{ pathname: '/' }} />
+        }
+
         const columns = [
             {
                 title: 'Id',
