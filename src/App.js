@@ -51,9 +51,11 @@ class App extends Component {
             <div className="site-layout-content">
                 <br />
                 <br />
-                <Button type="primary" block>
-                    Fight
-                </Button>
+                <Link to='/game-play'>
+                    <Button type="primary" block>
+                        Fight
+                    </Button>
+                </Link>
                 <UserOnlineList socket={socket} />
                 <Button type="primary" block>
                     Fight with Bot

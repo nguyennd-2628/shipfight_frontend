@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Row} from "antd";
+import {Button, Layout, Row} from "antd";
 import './Board.css'
 import {
     FIELD_HEIGHT,
@@ -14,6 +14,10 @@ import {
     PLANE_ONE_MISSED,
     PLANE_TWO_MISSED
 } from "../../common/Constant";
+import NavBar from "../../../components/navbar/NavBar";
+import {Link} from "react-router-dom";
+
+const { Content } = Layout;
 
 function Square(props) {
     switch (props.value) {
@@ -281,11 +285,18 @@ class Board extends Component {
         }
 
         return (
-            <div>
-                <Row style={{height:50}}><h1 className="announce">{announce}</h1></Row>
-                <Row style={{height:50}}><h2 className="status">{status}</h2></Row>
-                {this.renderBoard(squares)}
-            </div>
+            <Layout className="layout">
+                <NavBar />
+                <Content className='main'>
+                    <div className="site-layout-content">
+                        <div>
+                            <Row style={{height:50}}><h1 className="announce">{announce}</h1></Row>
+                            <Row style={{height:50}}><h2 className="status">{status}</h2></Row>
+                            {this.renderBoard(squares)}
+                        </div>
+                    </div>
+                </Content>
+            </Layout>
         );
     }
 }
