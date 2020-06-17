@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Avatar, Dropdown, Button } from 'antd';
+import { Menu, Avatar, Dropdown, Button, Space, Modal } from 'antd';
 import { Link } from "react-router-dom";
 
 import {
