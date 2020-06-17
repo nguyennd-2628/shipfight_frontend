@@ -7,7 +7,7 @@ import socketIOClient from "socket.io-client";
 import UserOnlineList from './components/fwf/UserOnlineList';
 import HasInvite from './components/fwf/HasInvite';
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
 const { Content } = Layout;
 const socket = socketIOClient(ENDPOINT);
 
