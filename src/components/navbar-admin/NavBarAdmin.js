@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Menu, Avatar, Dropdown, Button, Layout} from 'antd';
+import { Menu, Avatar, Dropdown, Button } from 'antd';
 import { Link } from "react-router-dom";
 
 import {
@@ -79,14 +79,14 @@ class NavBarAdmin extends Component {
                     // trigger='click'
                     overlay={menu(this.handleLogout)}
                 >
-                    <a className='ant-dropdown-link'>
+                    <Link className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
                         <span className='header__avatar--name'>
                             <span className='header__avatar--user'>Nghia Ta Hai</span>
                             <span className='header__avatar--rank'>1000</span>
                         </span>
                         <CaretDownOutlined />
-                    </a>
+                    </Link>
                 </Dropdown>
             </Menu>
         );

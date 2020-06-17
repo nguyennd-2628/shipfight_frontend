@@ -1,8 +1,8 @@
 import React from 'react'
 import {Card, Typography, Table, Layout} from 'antd'
-import {Link} from "react-router-dom";
 import NavBar from "../../components/navbar/NavBar";
-const { Header, Content, Footer } = Layout;
+
+const { Content } = Layout;
 const data = [
 
 ];

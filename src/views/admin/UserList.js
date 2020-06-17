@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import {Table, Space, Typography, Input, Button, Layout} from 'antd';
+import {Table, Space, Typography, Input, Button } from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import '../../App.css';
-import NavBarAdmin from "../../components/navbar-admin/NavBarAdmin";
-import {Redirect} from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
-const { Search } = Input;
 const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
 
 class UserList extends Component {
     constructor(props){
@@ -134,7 +131,7 @@ class UserList extends Component {
                 title: 'Name',
                 dataIndex: 'name',
                 key: 'name',
-                render: text => <a>{text}</a>,
+                render: text => <Link>{text}</Link>,
                 ...this.getColumnSearchProps('name')
             },
             {
@@ -152,8 +149,8 @@ class UserList extends Component {
                 key: 'action',
                 render: text => (
                     <Space size="middle">
-                        <a>View</a>
-                        <a>Delete</a>
+                        <Link>View</Link>
+                        <Link>Delete</Link>
                     </Space>
                 )
             }
