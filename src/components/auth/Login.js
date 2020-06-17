@@ -33,7 +33,7 @@ class Login extends Component {
             password: "",
             loggedIn,
             isAdmin,
-            clickedRegister: false    
+            clickedRegister: false
         }
         console.log(this.state)
     }
@@ -68,9 +68,9 @@ class Login extends Component {
                     description: 'You are logged in!',
                     duration: 2
                 });
-                localStorage.setItem("email",data.email)
+                localStorage.setItem("email",data.email);
                 if(res.data.userName.email === "dinhson2905@gmail.com"){
-                    localStorage.setItem('isAdmin',"true")
+                    localStorage.setItem('isAdmin',"true");
                     this.setState({
                         isAdmin : true
                     })
@@ -78,7 +78,7 @@ class Login extends Component {
                 this.setState({
                     loggedIn : true
                 })
-                
+
             })
             .catch((err) => {
                 notification.open({
@@ -101,7 +101,7 @@ class Login extends Component {
         if(this.state.clickedRegister){
             return <Redirect to={{ pathname: '/register' }} />
         }
-        
+
         return (
             <Layout className="layout">
                 {/*<NavBar />*/}

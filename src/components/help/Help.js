@@ -37,10 +37,16 @@ class Help extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    <li>1. Click a square to shoot</li>
-                    <li>2. If hit it will destroy</li>
-                    <li>3. How old are you?</li>
-                    <li>4. Im fine, Thanks and you!</li>
+                    {/*<li>1. Click a square to shoot</li>*/}
+                    {/*<li>2. If hit it will destroy</li>*/}
+                    {/*<li>3. How old are you?</li>*/}
+                    {/*<li>4. Im fine, Thanks and you!</li>*/}
+                    <li>ゲームは２段階があります</li>
+                    <li>フェース１：自分のシップを置く</li>
+                    <li>フェース２：ターンで、ロケットを発射する</li>
+                    <li>敵のシップは見えない</li>
+                    <li>敵のシップを全部倒すと、勝利</li>
+                    <li>自分のシップが全部やられたと、敗北</li>
                 </Modal>
             </div>
         );

@@ -43,6 +43,27 @@ function guide() {
   }
 
 class NavBar extends Component {
+    // constructor(props) {
+    //     super(props);
+    //     let loggedIn  = true;
+    //     let isAdmin = true;
+    //     const email = localStorage.getItem("email");
+    //     const adminToken = localStorage.getItem("isAdmin");
+    //     console.log(localStorage.getItem("username"));
+    //     if (email == null) {
+    //         loggedIn = false
+    //     }
+    //     if (adminToken == null ) {
+    //         isAdmin = false
+    //     }
+    //     this.state = {
+    //         loggedIn,
+    //         isAdmin,
+    //         email
+    //     };
+    //
+    // }
+
     handleLogout = () => {
         localStorage.removeItem("email")
         localStorage.removeItem("isAdmin")
@@ -73,12 +94,6 @@ class NavBar extends Component {
                     <Link exact to="/">
                         About Us
                     </Link>
-                </Menu.Item>
-                <Menu.Item key="guide" style={{float: 'left'}}>
-                    
-                <Space>
-                    <Button onClick={guide}>Guide</Button>
-                </Space>
                 </Menu.Item>
                 <Dropdown
                     // overlay={menu(handleLogOut, t)}
