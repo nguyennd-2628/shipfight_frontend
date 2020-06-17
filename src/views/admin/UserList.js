@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {Table, Space, Typography, Input, Button } from 'antd';
+import {Table, Space, Typography, Input, Button, Layout } from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import '../../App.css';
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom';
+import NavBarAdmin from './../../components/navbar-admin/NavBarAdmin';
 
 const { Title } = Typography;
 
@@ -157,17 +158,20 @@ class UserList extends Component {
         ];
         
         const { users, pagination, loading } = this.state;
-        return (             
-            <div className="site-layout-content">
-                <Title>User List</Title>
-                <Table
-                    columns={columns}
-                    dataSource={users}
-                    pagination={pagination}
-                    loading={loading}
-                    onChange={this.handleTableChange}
-                />
-            </div>
+        return (
+            <Layout className="layout">
+                <NavBarAdmin />
+                <div className="site-layout-content">
+                    <Title>User List</Title>
+                    <Table
+                        columns={columns}
+                        dataSource={users}
+                        pagination={pagination}
+                        loading={loading}
+                        onChange={this.handleTableChange}
+                    />
+                </div>
+            </Layout>             
         );
     }
 }
