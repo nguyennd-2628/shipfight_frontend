@@ -6,6 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 import socketIOClient from "socket.io-client";
 import UserOnlineList from './components/fwf/UserOnlineList';
 import HasInvite from './components/fwf/HasInvite';
+import Help from './components/help/Help';
 
 const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
 const { Content } = Layout;
@@ -62,9 +63,7 @@ class App extends Component {
                         Ranking
                    </Button>
               	</Link>
-                <Button type="primary" block>
-                    Help
-                </Button>
+                <Help />
             </div>
             <HasInvite socket={socket} />
           </Content>

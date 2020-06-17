@@ -75,6 +75,7 @@ class NavBar extends Component {
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="guide" style={{float: 'left'}}>
+                    
                 <Space>
                     <Button onClick={guide}>Guide</Button>
                 </Space>
