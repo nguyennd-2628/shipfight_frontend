@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Row} from "antd";
-import './Board.css'
+import '../game-play/Board.css'
 import {
     FIELD_HEIGHT,
     FIELD_WIDTH,
@@ -80,7 +80,7 @@ function Square(props) {
     }
 }
 
-class Board extends Component {
+class BotBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -156,7 +156,7 @@ class Board extends Component {
             // shooting phase player 1
             else {
                 if (squares[i] === PLANE_TWO_ALIVE || squares[i] === PLANE_TWO_EXPOSED){
-                        squares[i] = PLANE_TWO_DEAD;
+                    squares[i] = PLANE_TWO_DEAD;
                     announceMessage = `Shot HIT!!\nA plane of player2 has been terminated`;
                 }
                 else if (squares[i] === PLANE_ONE_ALIVE || squares[i] === PLANE_ONE_EXPOSED){
@@ -290,4 +290,4 @@ class Board extends Component {
     }
 }
 
-export default Board;
+export default BotBoard;
