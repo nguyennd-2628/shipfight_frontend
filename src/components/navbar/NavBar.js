@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Menu, Avatar, Dropdown, Button, Layout} from 'antd';
+import {Menu, Avatar, Dropdown, Button, Layout, Modal, Space} from 'antd';
 import { Link } from "react-router-dom";
 
 import {
@@ -28,6 +28,19 @@ const menu = (handleLogOut) => (
         </Menu.Item>
     </Menu>
 );
+
+function guide() {
+    Modal.info({
+      title: "Game guide",
+      content: (
+        <div>
+          <p>click a square to shoot</p>
+          <p>if hit it will destroy</p>
+        </div>
+      ),
+      onOk() {}
+    });
+  }
 
 class NavBar extends Component {
     handleLogout = () => {
@@ -60,6 +73,11 @@ class NavBar extends Component {
                     <Link exact to="/">
                         About Us
                     </Link>
+                </Menu.Item>
+                <Menu.Item key="guide" style={{float: 'left'}}>
+                <Space>
+                    <Button onClick={guide}>Guide</Button>
+                </Space>
                 </Menu.Item>
                 <Dropdown
                     // overlay={menu(handleLogOut, t)}
