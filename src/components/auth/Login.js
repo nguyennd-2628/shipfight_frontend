@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox, Layout, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import axios from "axios"
-import NavBar from "../navbar/NavBar";
 import '../../App.css'
 import NavBarLogin from "../navbar-login/NavBarLogin";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const layout = {
     labelCol: { span: 8 },
@@ -70,7 +69,7 @@ class Login extends Component {
                     duration: 2
                 });
                 localStorage.setItem("email",data.email)
-                if(res.data.userName.email == "dinhson2905@gmail.com"){
+                if(res.data.userName.email === "dinhson2905@gmail.com"){
                     localStorage.setItem('isAdmin',"true")
                     this.setState({
                         isAdmin : true

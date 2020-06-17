@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import App from "../App";
 import Login from "../components/auth/Login";
 import UserList from "../views/admin/UserList";
@@ -8,7 +8,6 @@ import PlayTimeStatistic from "../views/admin/PlayTimeStatistic";
 import Profile from "../components/profile/Profile";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
-import axios from 'axios'
 import Ranking from "../components/rankings/Ranking";
 
 const Routes = () => (

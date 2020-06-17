@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import {Button, Form, Input, Layout, notification} from 'antd';
 import axios from 'axios';
-import NavBar from "../navbar/NavBar";
 import { Redirect } from "react-router-dom";
 import NavBarLogin from "../navbar-login/NavBarLogin";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 class Register extends Component {
   constructor(props) {
@@ -57,7 +56,7 @@ class Register extends Component {
     })
   };
   onSubmit = (e) => {
-    if(this.state.password != this.state.repassword){
+    if(this.state.password !== this.state.repassword){
       notification.open({
         type: 'error',
         message: 'Error',
@@ -66,7 +65,7 @@ class Register extends Component {
       });    }
     else{
       var data;
-      if(this.state.avartar_url == ''){
+      if(this.state.avartar_url === ''){
         data = {
           email : this.state.email,
           password : this.state.password,

@@ -1,33 +1,32 @@
 import React, { Component } from 'react';
-import {Menu, Avatar, Dropdown, Button, Layout} from 'antd';
+import { Menu } from 'antd';
 import { Link } from "react-router-dom";
 
 import {
     UserOutlined,
     EditOutlined,
     GitlabOutlined,
-    CaretDownOutlined,
 } from '@ant-design/icons';
 import './NavBarLogin.css';
 
-const menu = (handleLogOut) => (
-    <Menu>
-        <Menu.Item key='1'>
-            <Link to='/profile'>
-                <Button type='link'>
-                    Profile
-                </Button>
-            </Link>
-        </Menu.Item>
-        <Menu.Item key='2'>
-            <Link to='/login'>
-            <Button type='link' onClick={handleLogOut}>
-                Log Out
-            </Button>
-            </Link>
-        </Menu.Item>
-    </Menu>
-);
+// const menu = (handleLogOut) => (
+//     <Menu>
+//         <Menu.Item key='1'>
+//             <Link to='/profile'>
+//                 <Button type='link'>
+//                     Profile
+//                 </Button>
+//             </Link>
+//         </Menu.Item>
+//         <Menu.Item key='2'>
+//             <Link to='/login'>
+//             <Button type='link' onClick={handleLogOut}>
+//                 Log Out
+//             </Button>
+//             </Link>
+//         </Menu.Item>
+//     </Menu>
+// );
 
 class NavBarLogin extends Component {
     handleLogout = () => {
