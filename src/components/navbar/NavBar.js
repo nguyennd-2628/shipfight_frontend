@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Avatar, Dropdown, Button, Space, Modal } from 'antd';
+import { Menu, Avatar, Dropdown, Button, Modal } from 'antd';
 import { Link } from "react-router-dom";
 
 import {
@@ -29,19 +29,6 @@ const menu = (handleLogOut) => (
     </Menu>
 );
 
-function guide() {
-    Modal.info({
-      title: "Game guide",
-      content: (
-        <div>
-          <p>click a square to shoot</p>
-          <p>if hit it will destroy</p>
-        </div>
-      ),
-      onOk() {}
-    });
-  }
-
 class NavBar extends Component {
     // constructor(props) {
     //     super(props);
@@ -65,8 +52,8 @@ class NavBar extends Component {
     // }
 
     handleLogout = () => {
-        localStorage.removeItem("email")
-        localStorage.removeItem("isAdmin")
+        localStorage.removeItem("email");
+        localStorage.removeItem("isAdmin");
         window.location.reload('/login')
     };
 
