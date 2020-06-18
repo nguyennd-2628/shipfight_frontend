@@ -30,26 +30,22 @@ const menu = (handleLogOut) => (
 );
 
 class NavBar extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     let loggedIn  = true;
-    //     let isAdmin = true;
-    //     const email = localStorage.getItem("email");
-    //     const adminToken = localStorage.getItem("isAdmin");
-    //     console.log(localStorage.getItem("username"));
-    //     if (email == null) {
-    //         loggedIn = false
-    //     }
-    //     if (adminToken == null ) {
-    //         isAdmin = false
-    //     }
-    //     this.state = {
-    //         loggedIn,
-    //         isAdmin,
-    //         email
-    //     };
-    //
-    // }
+    constructor(props) {
+        super(props);
+        // let loggedIn  = true;
+        // let isAdmin = true;
+        const email = localStorage.getItem("email");
+        // if (email == null) {
+        //     loggedIn = false
+        // }
+        // if (adminToken == null ) {
+        //     isAdmin = false
+        // }
+        this.state = {
+            email
+        };
+
+    }
 
     handleLogout = () => {
         localStorage.removeItem("email");
@@ -92,8 +88,8 @@ class NavBar extends Component {
                     <Link className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
                         <span className='header__avatar--name'>
-                            <span className='header__avatar--user'>Tri Hieu</span>
-                            <span className='header__avatar--rank'>1000</span>
+                            <span className='header__avatar--user'>{this.state.email}</span>
+                            <span className='header__avatar--rank'></span>
                         </span>
                         <CaretDownOutlined />
                     </Link>
