@@ -15,7 +15,7 @@ import {
     PLANE_TWO_MISSED
 } from "../../common/Constant";
 import NavBar from "../../../components/navbar/NavBar";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -87,7 +87,21 @@ function Square(props) {
 class Board extends Component {
     constructor(props) {
         super(props);
+        let loggedIn  = true;
+        let isAdmin = true;
+        const email = localStorage.getItem("email")
+        const adminToken = localStorage.getItem("isAdmin")
+
+        if (email == null) {
+            loggedIn = false
+        }
+        if (adminToken == null ) {
+            isAdmin = false
+        }
+
         this.state = {
+            loggedIn,
+            isAdmin,
             squares: Array(FIELD_WIDTH * FIELD_HEIGHT).fill(null),
             playerOneIsNext: true,
             setPlaneTurnLeft: MAX_PLANE * 2,
@@ -275,6 +289,13 @@ class Board extends Component {
     }
 
     render() {
+        if(!this.state.loggedIn){
+            return <Redirect  to='/login' />
+        }
+        else if (this.state.isAdmin) {
+            return <Redirect to={{ pathname: '/admin/user-list' }} />
+        }
+
         const {squares, playerOneIsNext, announce} = this.state;
         const winner = this.calculateWinner();
         let status;
