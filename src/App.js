@@ -3,7 +3,7 @@ import './App.css';
 import { Layout, Button } from 'antd';
 import NavBar from "./components/navbar/NavBar";
 import axios from 'axios'
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const { Content } = Layout;
 
