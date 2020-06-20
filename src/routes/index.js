@@ -10,6 +10,9 @@ import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
 import Ranking from "../components/rankings/Ranking";
 import Board from "../views/user/game-play/Board";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+const socket = socketIOClient(ENDPOINT);
 
 const Routes = () => (
     <Switch>
@@ -50,7 +53,7 @@ const Routes = () => (
         </Route>
         
         <Route path='/'>
-            <App />
+            <App socket={socket}/>
         </Route>
     </Switch>
 );

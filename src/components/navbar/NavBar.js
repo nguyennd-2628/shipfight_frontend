@@ -43,11 +43,11 @@ class NavBar extends Component {
 			loggedIn,
 			isAdmin
 		}
-		console.log("loggedIn = ",loggedIn)
 	}
 	handleLogout = () => {
 		localStorage.removeItem("user");
-		window.location.reload('/login')
+		this.props.socket.emit('logout');
+		window.location.reload('/login');
 	};
 	render() {
 		return (

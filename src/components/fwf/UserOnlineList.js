@@ -4,7 +4,19 @@ import { Modal, Button } from 'antd';
 class UserOnlineList extends Component {
     constructor(props) {
         super(props);
-
+        const userToken = localStorage.getItem("user") || null            // get default user infor
+        const loggedIn = (userToken === null) ? false : true
+        const user = (loggedIn) ? JSON.parse(userToken) : null
+        let isAdmin = true
+        if (user === null) isAdmin = false
+        else if (user.role === 'user') isAdmin = false
+        this.state = {
+            user,
+            loggedIn,
+            isAdmin,
+            visible: false,
+            usersOnline: []
+        }
         props.socket.on('s2c_online_list', data => {
             this.setState({ usersOnline: data })
         })
@@ -12,13 +24,7 @@ class UserOnlineList extends Component {
             if (data.success === 0) alert('failed to send an invitation to challenge');
             else alert('Sent an invitation to challenge');
         })
-
     }
-
-    state = {
-        visible: false,
-        usersOnline: []
-    };
 
     showModal = () => {
         this.props.socket.emit('c2s_online_list');
@@ -48,15 +54,14 @@ class UserOnlineList extends Component {
     }
 
     renderUsersOnline = () => {
-        const email = localStorage.getItem('email');
-        const users = this.state.usersOnline.filter( user => {
-            if (user.infor !== email) return user;
+         const users = this.state.usersOnline.filter(user => {
+            if (user.infor.email !== this.state.user.email) return user;
             else return null;
         })
         return (
             <div>
-                { users.map( user => (
-                    <li>{user.infor} <Button value={user.socketId} onClick={this.handleInvite}>Invite</Button></li>
+                {users.map(user => (
+                    <li>{user.infor.name} - {user.infor.ranking_point} <Button value={user.socketId} onClick={this.handleInvite}>Invite</Button></li>
                 ))}
             </div>
         )
