@@ -30,6 +30,22 @@ const menu = (handleLogOut) => (
 );
 
 class NavBarAdmin extends Component {
+    constructor(props) {
+        super(props);
+        // let loggedIn  = true;
+        // let isAdmin = true;
+        const email = localStorage.getItem("email");
+        // if (email == null) {
+        //     loggedIn = false
+        // }
+        // if (adminToken == null ) {
+        //     isAdmin = false
+        // }
+        this.state = {
+            email
+        };
+
+    }
     handleLogout = () => {
         localStorage.removeItem("email")
         localStorage.removeItem("isAdmin")
@@ -82,8 +98,8 @@ class NavBarAdmin extends Component {
                     <Link className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
                         <span className='header__avatar--name'>
-                            <span className='header__avatar--user'>Nghia Ta Hai</span>
-                            <span className='header__avatar--rank'>1000</span>
+                            <span className='header__avatar--user'>{this.state.email}</span>
+                            <span className='header__avatar--rank'></span>
                         </span>
                         <CaretDownOutlined />
                     </Link>

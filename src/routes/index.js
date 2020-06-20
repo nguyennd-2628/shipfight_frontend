@@ -9,6 +9,7 @@ import Profile from "../components/profile/Profile";
 import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
 import Ranking from "../components/rankings/Ranking";
+import Board from "../views/user/game-play/Board";
 
 const Routes = () => (
     <Switch>
@@ -42,47 +43,12 @@ const Routes = () => (
         <Route path='/ranking'>
             <Ranking />
         </Route>
+        <Route path='/game-play'>
+            <Board />
+        </Route>
         <Route path='/'>
             <App />
         </Route>
-
-        {/*/!* Dashboard *!/*/}
-        {/*<AuthenticatedRoute*/}
-        {/*    exact*/}
-        {/*    path='/'*/}
-        {/*    acceptedRoles={availableRoles.filter(role => role != superAdminRole)}*/}
-        {/*    component={MainLayout(Dashboard)}*/}
-        {/*/>*/}
-
-
-        {/*/!* Admin *!/*/}
-        {/*<AuthenticatedRoute*/}
-        {/*    exact*/}
-        {/*    path='/admins'*/}
-        {/*    acceptedRoles={availableRoles.filter(role => role != teacherRole && role != studentRole)}*/}
-        {/*    component={MainLayout(AdminList)}*/}
-        {/*/>*/}
-
-        {/*/!* Student *!/*/}
-        {/*<AuthenticatedRoute*/}
-        {/*    exact*/}
-        {/*    path='/students'*/}
-        {/*    acceptedRoles={availableRoles.filter(role => role != superAdminRole)}*/}
-        {/*    component={MainLayout(StudentList)}*/}
-        {/*/>*/}
-        {/*<AuthenticatedRoute*/}
-        {/*    exact*/}
-        {/*    path='/students/add'*/}
-        {/*    acceptedRoles={availableRoles.filter(role => role == adminRole || role == teacherRole)}*/}
-        {/*    component={MainLayout(StudentAdd)}*/}
-        {/*/>*/}
-        {/*<AuthenticatedRoute*/}
-        {/*    exact*/}
-        {/*    path='/students/:id'*/}
-        {/*    acceptedRoles={availableRoles.filter(role => role != superAdminRole && role != studentRole)}*/}
-        {/*    component={MainLayout(StudentDetail)}*/}
-        {/*/>*/}
-
     </Switch>
 );
 
