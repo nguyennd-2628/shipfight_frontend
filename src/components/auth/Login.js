@@ -16,28 +16,28 @@ const tailLayout = {
 };
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        let loggedIn  = true;
-        let isAdmin = true;
-        const email = localStorage.getItem("email")
-        const adminToken = localStorage.getItem("isAdmin")
-        if(email == null){
+        let loggedIn  = true
+        let isAdmin = true
+        let user = null
+
+        const userToken = localStorage.getItem("user") || null
+        if(userToken == null){
             loggedIn = false
         }
-        if(adminToken == null ){
-            isAdmin = false
+        else{
+            user = JSON.parse(userToken)
+            if(user.role !== "admin" ) isAdmin = false
         }
         this.state = {
-            email: "",
-            password: "",
             loggedIn,
             isAdmin,
+            email : "",
+            password: "",
             clickedRegister: false
         }
-        console.log(this.state)
     }
-
     onChangePassword = (e) => {
         this.setState({
             password: e.target.value
@@ -48,19 +48,17 @@ class Login extends Component {
             email: e.target.value
         })
     };
-
     onClickRegister = (e) => {
         this.setState({
             clickedRegister: true
         })
     };
-
     onCommit = (e) => {
         var data = {
             email: this.state.email,
             password: this.state.password
         };
-        axios.post('https://battle-ship-back-end-2020.herokuapp.com/auth/login',data)
+        axios.post('https://battle-ship-back-end-2020.herokuapp.com/auth/login', data)
             .then((res) => {
                 notification.open({
                     type: 'success',
@@ -68,17 +66,12 @@ class Login extends Component {
                     description: 'You are logged in!',
                     duration: 2
                 });
-                localStorage.setItem("email",data.email);
-                if(res.data.userName.email === "dinhson2905@gmail.com"){
-                    localStorage.setItem('isAdmin',"true");
-                    this.setState({
-                        isAdmin : true
-                    })
-                }
+                console.log(res.data.userName)
+                // localStorage.setItem("user",JSON.stringify(res.data.userName));
+                localStorage.setItem("user", JSON.stringify(res.data.userName));
                 this.setState({
-                    loggedIn : true
+                    loggedIn: true
                 })
-
             })
             .catch((err) => {
                 notification.open({
@@ -90,15 +83,15 @@ class Login extends Component {
             })
     };
     render() {
-        if(this.state.loggedIn){
-            if(!this.state.isAdmin){
+        if (this.state.loggedIn) {
+            if (!this.state.isAdmin) {
                 return <Redirect to="/" />
             }
-            else{
+            else {
                 return <Redirect to={{ pathname: '/admin/user-list' }} />
             }
         }
-        if(this.state.clickedRegister){
+        if (this.state.clickedRegister) {
             return <Redirect to={{ pathname: '/register' }} />
         }
 

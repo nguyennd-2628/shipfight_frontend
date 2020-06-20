@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../../assets/canvasjs.react';
-import NavBarAdmin from "../../components/navbar-admin/NavBarAdmin";
+import NavBar from "../../components/navbar/NavBar";
 import '../../App.css';
 import { Layout } from "antd";
 
@@ -50,7 +50,7 @@ class LineChart extends Component {
 
 		return (
 			<Layout className="layout">
-				<NavBarAdmin />
+				<NavBar />
 				<Content className='main'>
 				<div className="site-layout-content">
 					<h1>Statistic</h1>

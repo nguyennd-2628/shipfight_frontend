@@ -40,12 +40,15 @@ const Routes = () => (
         <Route path='/profile-edit'>
             <ProfileEdit />
         </Route>
+
         <Route path='/ranking'>
             <Ranking />
         </Route>
+        
         <Route path='/game-play'>
             <Board />
         </Route>
+        
         <Route path='/'>
             <App />
         </Route>
