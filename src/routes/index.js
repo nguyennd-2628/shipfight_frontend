@@ -21,9 +21,9 @@ const Routes = () => (
             <Register />
         </Route>
 
-        <Route path='/admin/user-list'>
+        {/* <Route path='/admin/user-list'>
             <UserList />
-        </Route>
+        </Route> */}
 
         <Route path='/admin/player-statistic'>
             <LineChart />

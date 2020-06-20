@@ -16,28 +16,46 @@ const tailLayout = {
 };
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        let loggedIn  = true;
+        // let loggedIn  = false
+        // let isAdmin = false
+        // const userToken = localStorage.getItem("user") || null 
+        // // const users = JSON.parse(localStorage.getItem('user')) || null
+        // let user = null
+        // if(userToken !== null){
+        //     loggedIn = true
+        // }
+        // else{
+        //     // user = JSON.parse(userToken)
+        //     // console.log("user infor: ", users)
+        //     console.log("userToken : ",userToken)
+        //     // if(user.role !== "admin") isAdmin = false;
+        // }
+
+        // this.state = {
+        //     user,
+        //     loggedIn,
+        //     isAdmin,
+        //     clickedRegister: false
+        // }
+        let loggedIn = true;
         let isAdmin = true;
-        const email = localStorage.getItem("email")
+        const email = localStorage.getItem("user")
         const adminToken = localStorage.getItem("isAdmin")
-        if(email == null){
+
+        if (email == null) {
             loggedIn = false
         }
-        if(adminToken == null ){
+        if (adminToken == null) {
             isAdmin = false
         }
         this.state = {
-            email: "",
-            password: "",
             loggedIn,
             isAdmin,
-            clickedRegister: false
-        }
-        console.log(this.state)
+            email
+        };
     }
-
     onChangePassword = (e) => {
         this.setState({
             password: e.target.value
@@ -48,19 +66,17 @@ class Login extends Component {
             email: e.target.value
         })
     };
-
     onClickRegister = (e) => {
         this.setState({
             clickedRegister: true
         })
     };
-
     onCommit = (e) => {
         var data = {
             email: this.state.email,
             password: this.state.password
         };
-        axios.post('https://battle-ship-back-end-2020.herokuapp.com/auth/login',data)
+        axios.post('https://battle-ship-back-end-2020.herokuapp.com/auth/login', data)
             .then((res) => {
                 notification.open({
                     type: 'success',
@@ -68,15 +84,23 @@ class Login extends Component {
                     description: 'You are logged in!',
                     duration: 2
                 });
-                localStorage.setItem("email",data.email);
-                if(res.data.userName.email === "dinhson2905@gmail.com"){
-                    localStorage.setItem('isAdmin',"true");
-                    this.setState({
-                        isAdmin : true
-                    })
-                }
+                // console.log(res.data.userName)
+                // localStorage.setItem("user",JSON.stringify(res.data.userName));
+                localStorage.setItem("user", "hieu");
+                // if(res.data.userName.role === "admin"){
+                //     localStorage.setItem('isAdmin',"true");
+                //     this.setState({
+                //         isAdmin : true
+                //     })
+                // }
+                // else{
+                //     localStorage.setItem('isAdmin',"false");
+                //     this.setState({
+                //         isAdmin : false
+                //     })
+                // }
                 this.setState({
-                    loggedIn : true
+                    loggedIn: true
                 })
             })
             .catch((err) => {
@@ -89,15 +113,15 @@ class Login extends Component {
             })
     };
     render() {
-        if(this.state.loggedIn){
-            if(!this.state.isAdmin){
+        if (this.state.loggedIn) {
+            if (!this.state.isAdmin) {
                 return <Redirect to="/" />
             }
-            else{
+            else {
                 return <Redirect to={{ pathname: '/admin/user-list' }} />
             }
         }
-        if(this.state.clickedRegister){
+        if (this.state.clickedRegister) {
             return <Redirect to={{ pathname: '/register' }} />
         }
 
