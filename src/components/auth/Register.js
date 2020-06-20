@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import {Button, Form, Input, Layout, notification} from 'antd';
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
-import NavBarLogin from "../navbar-login/NavBarLogin";
+import NavBar from "../navbar/NavBar";
 
 const { Content } = Layout;
 
@@ -113,8 +113,7 @@ class Register extends Component {
     };
     return (
         <Layout className="layout">
-          {/*<NavBar />*/}
-          <NavBarLogin />
+          <NavBar />
           <Content className='main'>
             <div className="site-layout-content">
             <Form {...layout} name="nest-messages" >
