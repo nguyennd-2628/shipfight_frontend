@@ -3,7 +3,7 @@ import { Table, Space, Layout, Typography } from 'antd';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../../components/navbar/NavBar";
-
+import {Redirect} from 'react-router-dom'
 const { Title } = Typography;
 
 const columns = [
@@ -25,9 +25,9 @@ const columns = [
     {
         title: 'Action',
         key: 'Action',
-        render: text => (
+        render: (text,record) => (
             <Space size="middle">
-                <Link>View</Link>
+                <Link to ={'/profile/'+record.id}>View</Link>
             </Space>
         )
     }
@@ -35,14 +35,25 @@ const columns = [
 
 
 class Ranking extends Component {
-    state = {
-        users: [],
-        pagination: {
+    constructor(props) {
+        super(props);
+        const userToken = localStorage.getItem("user") || null            // get default user infor
+        const loggedIn  = (userToken === null) ? false : true 
+        const user = (loggedIn) ? JSON.parse(userToken) : null
+        let isAdmin = true
+        if( user === null) isAdmin = false
+        else if( user.role === 'user' ) isAdmin = false
+        this.state = {
+            user,
+            loggedIn,
+            isAdmin,
+            users: [],
+            pagination: {
             current: 1,
             pageSize: 10,
         },
+        }
     }
-
     componentDidMount() {
         axios.get(`https://battle-ship-back-end-2020.herokuapp.com/users`)
             .then(res => {
@@ -52,8 +63,6 @@ class Ranking extends Component {
 
             })
             .catch(error => console.log(error));
-
-        
     }
 
     handleTableChange = (pagination) => {
@@ -63,8 +72,8 @@ class Ranking extends Component {
             } 
         });
     }
-
     render() {
+        if (!this.state.loggedIn)  return <Redirect to='/login' />
         return (
             <Layout className="layout">
                 <NavBar />

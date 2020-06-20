@@ -6,10 +6,25 @@ class HasInvite extends Component {
     constructor(props) {
         super(props);
 
+        const userToken = localStorage.getItem("user") || null            // get default user infor
+        const loggedIn = (userToken === null) ? false : true
+        const user = (loggedIn) ? JSON.parse(userToken) : null
+        let isAdmin = true
+        if (user === null) isAdmin = false
+        else if (user.role === 'user') isAdmin = false
+        this.state = {
+            user,
+            loggedIn,
+            isAdmin,
+            visible: false,
+            visibleMatching: false,
+            host: null,
+            host_socketId: ''
+        }
         props.socket.on('s2c_loi_moi', data => {
             this.setState({
                 visible: true,
-                host_email: data.host_email,
+                host: data.host,
                 host_socketId: data.host_socketId
             })
 
@@ -19,12 +34,6 @@ class HasInvite extends Component {
             else alert('Matching failed');
         })
 
-    }
-    state = {
-        visible: false,
-        visibleMatching: false,
-        host_email: '',
-        host_socketId: ''
     }
     handleOk = e => {
         this.props.socket.emit("c2s_phan_hoi", { result: true, socketId: this.state.host_socketId })
@@ -56,7 +65,7 @@ class HasInvite extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    {this.state.host_email} sends his challenge to you
+                    {(this.state.host===null)?'':this.state.host.name} - {(this.state.host===null)?'':this.state.host.ranking_point} sends his challenge to you
                 </Modal>
                 <Modal
                     title="Matching"

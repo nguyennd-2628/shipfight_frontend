@@ -10,6 +10,9 @@ import ProfileEdit from "../components/profile/ProfileEdit";
 import Register from "../components/auth/Register";
 import Ranking from "../components/rankings/Ranking";
 import Board from "../views/user/game-play/Board";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
+const socket = socketIOClient(ENDPOINT);
 
 const Routes = () => (
     <Switch>
@@ -33,11 +36,11 @@ const Routes = () => (
             <PlayTimeStatistic />
         </Route>
 
-        <Route path='/profile'>
-            <Profile />
+        <Route path='/profile/:id' render = {props => <Profile {...props} /> } >
+            {/* <Profile  /> */}
         </Route>
 
-        <Route path='/profile-edit'>
+        <Route path='/profile-edit/:id'>
             <ProfileEdit />
         </Route>
 
@@ -50,7 +53,7 @@ const Routes = () => (
         </Route>
         
         <Route path='/'>
-            <App />
+            <App socket={socket}/>
         </Route>
     </Switch>
 );

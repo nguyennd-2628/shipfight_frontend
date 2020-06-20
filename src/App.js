@@ -3,15 +3,11 @@ import './App.css';
 import { Layout, Button } from 'antd';
 import NavBar from "./components/navbar/NavBar";
 import { Redirect, Link } from 'react-router-dom';
-import socketIOClient from "socket.io-client";
 import UserOnlineList from './components/fwf/UserOnlineList';
 import HasInvite from './components/fwf/HasInvite';
 import Help from './components/help/Help';
 
-const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
 const { Content } = Layout;
-const socket = socketIOClient(ENDPOINT);
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +22,7 @@ class App extends Component {
         loggedIn,
         isAdmin
     }
-    if (loggedIn) socket.emit('c2s_online_alert', user.email);
+    if (loggedIn) props.socket.emit('c2s_online_alert', user);
   }
 
   render() {
@@ -35,7 +31,7 @@ class App extends Component {
     return (
       <div className="App">
         <Layout className="layout">
-          <NavBar />
+          <NavBar socket={this.props.socket} />
           <Content className='main'>
             <div className="site-layout-content">
               <br />
@@ -45,7 +41,7 @@ class App extends Component {
                   Fight
                 </Button>
               </Link>
-              <UserOnlineList socket={socket} />
+              <UserOnlineList socket={this.props.socket} />
               <Button type="primary" block>
                 Fight with Bot
                             </Button>
@@ -56,7 +52,7 @@ class App extends Component {
               </Link>
               <Help />
             </div>
-            <HasInvite socket={socket} />
+            <HasInvite socket={this.props.socket} />
           </Content>
         </Layout>
       </div>
