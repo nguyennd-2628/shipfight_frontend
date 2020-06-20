@@ -21,9 +21,9 @@ const Routes = () => (
             <Register />
         </Route>
 
-        {/* <Route path='/admin/user-list'>
+        <Route path='/admin/user-list'>
             <UserList />
-        </Route> */}
+        </Route>
 
         <Route path='/admin/player-statistic'>
             <LineChart />
@@ -40,12 +40,15 @@ const Routes = () => (
         <Route path='/profile-edit'>
             <ProfileEdit />
         </Route>
+
         <Route path='/ranking'>
             <Ranking />
         </Route>
+        
         <Route path='/game-play'>
             <Board />
         </Route>
+        
         <Route path='/'>
             <App />
         </Route>

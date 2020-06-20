@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { Layout, Button } from 'antd';
 import NavBar from "./components/navbar/NavBar";
-import axios from 'axios'
 import { Redirect, Link } from 'react-router-dom';
 import socketIOClient from "socket.io-client";
 import UserOnlineList from './components/fwf/UserOnlineList';
@@ -16,34 +15,23 @@ const socket = socketIOClient(ENDPOINT);
 class App extends Component {
   constructor(props) {
     super(props);
-    let loggedIn = true;
-    let isAdmin = true;
-    const email = localStorage.getItem("email")
-    const adminToken = localStorage.getItem("isAdmin")
-
-    if (email == null) {
-      loggedIn = false
-    }
-    if (adminToken == null) {
-      isAdmin = false
-    }
+    const userToken = localStorage.getItem("user") || null            // get default user infor
+    const loggedIn  = (userToken === null) ? false : true 
+    const user = (loggedIn) ? JSON.parse(userToken) : null
+    let isAdmin = true
+    if( user === null) isAdmin = false
+    else if( user.role === 'user' ) isAdmin = false
     this.state = {
-      loggedIn,
-      isAdmin,
-      email
-    };
-
-    if (loggedIn) socket.emit('c2s_online_alert', email);
+        user,
+        loggedIn,
+        isAdmin
+    }
+    if (loggedIn) socket.emit('c2s_online_alert', user.email);
   }
 
   render() {
-    if (!this.state.loggedIn) {
-      return <Redirect to='/login' />
-    }
-    else if (this.state.isAdmin) {
-      return <Redirect to={{ pathname: '/admin/user-list' }} />
-    }
-
+    if (!this.state.loggedIn)  return <Redirect to='/login' />
+    else if (this.state.isAdmin)  return <Redirect to={{ pathname: '/admin/user-list' }} />
     return (
       <div className="App">
         <Layout className="layout">

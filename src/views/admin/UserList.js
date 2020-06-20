@@ -5,25 +5,22 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import '../../App.css';
 import { Redirect, Link } from 'react-router-dom';
-import NavBarAdmin from './../../components/navbar-admin/NavBarAdmin';
+import NavBar from './../../components/navbar/NavBar';
 
 const { Title } = Typography;
 
 class UserList extends Component {
     constructor(props){
         super(props);
-        let loggedIn  = true;
-        let isAdmin = true;
-        const email = localStorage.getItem("email")
-        const adminToken = localStorage.getItem("isAdmin")
-        if(email == null){
-            loggedIn = false
-        }
-        if(adminToken == null ){
-            isAdmin = false
-        }
+        const userToken = localStorage.getItem("user") || null            // get default user infor
+        const loggedIn  = (userToken === null) ? false : true 
+        const user = (loggedIn) ? JSON.parse(userToken) : null
+        let isAdmin = true
+        if( user === null) isAdmin = false
+        else if( user.role === 'user' ) isAdmin = false
+
         this.state = {
-            email: "",
+            user,
             password: "",
             loggedIn,
             isAdmin,
@@ -114,14 +111,12 @@ class UserList extends Component {
     });
 
     render() {
-
         if(!this.state.loggedIn){
             return <Redirect  to='/login' />
         }
         else if(!this.state.isAdmin){
             return <Redirect to={{ pathname: '/' }} />
         }
-
         const columns = [
             {
                 title: 'Id',
@@ -160,7 +155,7 @@ class UserList extends Component {
         const { users, pagination, loading } = this.state;
         return (
             <Layout className="layout">
-                <NavBarAdmin />
+                <NavBar />
                 <div className="site-layout-content">
                     <Title>User List</Title>
                     <Table

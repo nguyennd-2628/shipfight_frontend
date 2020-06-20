@@ -18,43 +18,25 @@ const tailLayout = {
 class Login extends Component {
     constructor(props) {
         super(props);
-        // let loggedIn  = false
-        // let isAdmin = false
-        // const userToken = localStorage.getItem("user") || null 
-        // // const users = JSON.parse(localStorage.getItem('user')) || null
-        // let user = null
-        // if(userToken !== null){
-        //     loggedIn = true
-        // }
-        // else{
-        //     // user = JSON.parse(userToken)
-        //     // console.log("user infor: ", users)
-        //     console.log("userToken : ",userToken)
-        //     // if(user.role !== "admin") isAdmin = false;
-        // }
+        let loggedIn  = true
+        let isAdmin = true
+        let user = null
 
-        // this.state = {
-        //     user,
-        //     loggedIn,
-        //     isAdmin,
-        //     clickedRegister: false
-        // }
-        let loggedIn = true;
-        let isAdmin = true;
-        const email = localStorage.getItem("user")
-        const adminToken = localStorage.getItem("isAdmin")
-
-        if (email == null) {
+        const userToken = localStorage.getItem("user") || null
+        if(userToken == null){
             loggedIn = false
         }
-        if (adminToken == null) {
-            isAdmin = false
+        else{
+            user = JSON.parse(userToken)
+            if(user.role !== "admin" ) isAdmin = false
         }
         this.state = {
             loggedIn,
             isAdmin,
-            email
-        };
+            email : "",
+            password: "",
+            clickedRegister: false
+        }
     }
     onChangePassword = (e) => {
         this.setState({
@@ -84,21 +66,9 @@ class Login extends Component {
                     description: 'You are logged in!',
                     duration: 2
                 });
-                // console.log(res.data.userName)
+                console.log(res.data.userName)
                 // localStorage.setItem("user",JSON.stringify(res.data.userName));
-                localStorage.setItem("user", "hieu");
-                // if(res.data.userName.role === "admin"){
-                //     localStorage.setItem('isAdmin',"true");
-                //     this.setState({
-                //         isAdmin : true
-                //     })
-                // }
-                // else{
-                //     localStorage.setItem('isAdmin',"false");
-                //     this.setState({
-                //         isAdmin : false
-                //     })
-                // }
+                localStorage.setItem("user", JSON.stringify(res.data.userName));
                 this.setState({
                     loggedIn: true
                 })
