@@ -78,7 +78,6 @@ class Login extends Component {
                 this.setState({
                     loggedIn : true
                 })
-
             })
             .catch((err) => {
                 notification.open({
