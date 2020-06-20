@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Space, Typography, Input, Button, Layout } from 'antd';
+import {Table, Space, Typography, Input, Button, Layout, notification } from 'antd';
 import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
@@ -110,6 +110,28 @@ class UserList extends Component {
             />) : ( text ),
     });
 
+    handleDelete = (e) => {
+        alert(e.target.value)
+        const id = e.target.value
+        axios.delete('https://battle-ship-back-end-2020.herokuapp.com/users/'+id)
+        .then((res)=>{
+            notification.open({
+                type: 'success',
+                message: 'Success',
+                description: 'Delete Data Success',
+                duration: 2
+            });
+        })
+        .catch((err)=>{
+            notification.open({
+                type: 'error',
+                message: 'error',
+                description: 'Delete Data Fail',
+                duration: 2
+            });
+        })
+    }
+
     render() {
         if(!this.state.loggedIn){
             return <Redirect  to='/login' />
@@ -145,8 +167,8 @@ class UserList extends Component {
                 key: 'action',
                 render: (text,record) => (
                     <Space size="middle">
-                        <Link to='/profile' >View </Link>
-                        <Link>Delete</Link>
+                        <Link to={'/profile/'+record.id} >View </Link>
+                        <Link value = {record.id} onClick = {this.handleDelete}>Delete</Link>
                     </Space>
                 )
             }

@@ -3,8 +3,8 @@ import { Button, Layout, Row, Col } from 'antd';
 import '../../App.css';
 import NavBar from "../../components/navbar/NavBar";
 import './Profile.css'
-import { Link,Redirect } from "react-router-dom";
-
+import { Link, Redirect } from "react-router-dom";
+import axios from 'axios'
 const { Content } = Layout;
 
 class Profile extends Component {
@@ -19,11 +19,28 @@ class Profile extends Component {
         this.state = {
             user,
             loggedIn,
-            isAdmin
+            isAdmin,
+            yourInfor: true
         }
     }
+    componentDidMount(){
+        const id = this.props.match.params.id
+        if(this.state.loggedIn && id != this.state.user.id){
+            this.setState({
+                yourInfor : false
+            })
+            axios.get('https://battle-ship-back-end-2020.herokuapp.com/users/'+id)
+            .then((res)=>{
+                let user = res.data.userName[0]
+                this.setState({
+                    user : user
+                })
+            })
+        }    
+        
+    }
     render() {
-        if (!this.state.loggedIn)  return <Redirect to='/login' />
+        if (!this.state.loggedIn) return <Redirect to='/login' />
         return (
             <Layout className="layout">
                 <NavBar />
@@ -69,11 +86,13 @@ class Profile extends Component {
                                     10h04'
                                 </div>
                                 <br />
-                                <Button type="primary">
-                                    <Link exact to="/profile-edit">
-                                        Edit
-                                </Link>
-                                </Button>
+                                {!this.state.yourInfor ? null :
+                                    <Button type="primary">
+                                        <Link exact to={"/profile-edit/"+this.state.user.id}>
+                                            Edit 
+                                        </Link>
+                                    </Button>
+                                }
                             </Col>
                         </Row>
                     </div>

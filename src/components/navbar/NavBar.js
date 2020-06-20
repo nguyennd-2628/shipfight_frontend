@@ -10,10 +10,10 @@ import {
 } from '@ant-design/icons';
 import './NavBar.css';
 
-const menu = (handleLogout) => (
+const menu = (handleLogout,user) => (
 	<Menu>
 		<Menu.Item key='1'>
-			<Link to='/profile'>
+			<Link to={`/profile/${user.id}`} >
 				<Button type='link'>
 					Profile
         </Button>
@@ -61,7 +61,7 @@ class NavBar extends Component {
 				{(!this.state.loggedIn ) ? <Link style={{float : "right"}} to='/login'> Login </Link> : 
 					<Dropdown
 						className='header__avatar'
-						overlay={menu(this.handleLogout)}
+						overlay={menu(this.handleLogout,this.state.user)}
 					>
 						<Link className='ant-dropdown-link'>
 							<Avatar src={this.state.user.avartar_url} />

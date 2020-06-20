@@ -33,11 +33,11 @@ const Routes = () => (
             <PlayTimeStatistic />
         </Route>
 
-        <Route path='/profile'>
-            <Profile />
+        <Route path='/profile/:id' render = {props => <Profile {...props} /> } >
+            {/* <Profile  /> */}
         </Route>
 
-        <Route path='/profile-edit'>
+        <Route path='/profile-edit/:id'>
             <ProfileEdit />
         </Route>
 
