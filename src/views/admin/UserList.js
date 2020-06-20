@@ -143,9 +143,9 @@ class UserList extends Component {
             {
                 title: 'Action',
                 key: 'action',
-                render: text => (
+                render: (text,record) => (
                     <Space size="middle">
-                        <Link>View</Link>
+                        <Link to='/profile' >View </Link>
                         <Link>Delete</Link>
                     </Space>
                 )

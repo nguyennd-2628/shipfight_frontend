@@ -27,7 +27,7 @@ const columns = [
         key: 'Action',
         render: text => (
             <Space size="middle">
-                <Link>View</Link>
+                <Link >View</Link>
             </Space>
         )
     }

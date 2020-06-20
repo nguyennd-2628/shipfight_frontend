@@ -58,7 +58,7 @@ class NavBar extends Component {
 				{this.state.isAdmin && this.state.loggedIn ? PlayerStatistic() : null}
 				{this.state.isAdmin && this.state.loggedIn ? PlayerTimeStatistic() : null}
 				{(!this.state.isAdmin ) ? AboutUs() : null}
-				{(!this.state.loggedIn ) ? null : 
+				{(!this.state.loggedIn ) ? <Link style={{float : "right"}} to='/login'> Login </Link> : 
 					<Dropdown
 						className='header__avatar'
 						overlay={menu(this.handleLogout)}
