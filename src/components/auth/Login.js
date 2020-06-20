@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Layout, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import axios from "axios"
 import '../../App.css'
-import NavBarLogin from "../navbar-login/NavBarLogin";
+import NavBar from "../navbar/NavBar";
 
 const { Content } = Layout;
 
@@ -97,8 +97,7 @@ class Login extends Component {
 
         return (
             <Layout className="layout">
-                {/*<NavBar />*/}
-                <NavBarLogin />
+                <NavBar />
                 <Content className='main'>
                     <div className="site-layout-content">
                         <Form
