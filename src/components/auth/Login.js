@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Checkbox, Layout, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import axios from "axios"
-import NavBar from "../navbar/NavBar";
 import '../../App.css'
 import NavBarLogin from "../navbar-login/NavBarLogin";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const layout = {
     labelCol: { span: 8 },
@@ -34,7 +33,7 @@ class Login extends Component {
             password: "",
             loggedIn,
             isAdmin,
-            clickedRegister: false    
+            clickedRegister: false
         }
         console.log(this.state)
     }
@@ -69,9 +68,9 @@ class Login extends Component {
                     description: 'You are logged in!',
                     duration: 2
                 });
-                localStorage.setItem("email",data.email)
-                if(res.data.userName.email == "dinhson2905@gmail.com"){
-                    localStorage.setItem('isAdmin',"true")
+                localStorage.setItem("email",data.email);
+                if(res.data.userName.email === "dinhson2905@gmail.com"){
+                    localStorage.setItem('isAdmin',"true");
                     this.setState({
                         isAdmin : true
                     })
@@ -79,7 +78,7 @@ class Login extends Component {
                 this.setState({
                     loggedIn : true
                 })
-                
+
             })
             .catch((err) => {
                 notification.open({
@@ -102,7 +101,7 @@ class Login extends Component {
         if(this.state.clickedRegister){
             return <Redirect to={{ pathname: '/register' }} />
         }
-        
+
         return (
             <Layout className="layout">
                 {/*<NavBar />*/}

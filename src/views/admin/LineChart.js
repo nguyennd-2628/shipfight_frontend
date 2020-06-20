@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import CanvasJSReact from '../../assets/canvasjs.react';
 import NavBarAdmin from "../../components/navbar-admin/NavBarAdmin";
 import '../../App.css';
-import {Layout, Table} from "antd";
+import { Layout } from "antd";
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 class LineChart extends Component {
 	render() {

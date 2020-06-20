@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Menu, Avatar, Dropdown, Button, Layout} from 'antd';
+import { Menu, Avatar, Dropdown, Button, Space, Modal } from 'antd';
 import { Link } from "react-router-dom";
 
 import {
@@ -29,7 +29,41 @@ const menu = (handleLogOut) => (
     </Menu>
 );
 
+function guide() {
+    Modal.info({
+      title: "Game guide",
+      content: (
+        <div>
+          <p>click a square to shoot</p>
+          <p>if hit it will destroy</p>
+        </div>
+      ),
+      onOk() {}
+    });
+  }
+
 class NavBar extends Component {
+    // constructor(props) {
+    //     super(props);
+    //     let loggedIn  = true;
+    //     let isAdmin = true;
+    //     const email = localStorage.getItem("email");
+    //     const adminToken = localStorage.getItem("isAdmin");
+    //     console.log(localStorage.getItem("username"));
+    //     if (email == null) {
+    //         loggedIn = false
+    //     }
+    //     if (adminToken == null ) {
+    //         isAdmin = false
+    //     }
+    //     this.state = {
+    //         loggedIn,
+    //         isAdmin,
+    //         email
+    //     };
+    //
+    // }
+
     handleLogout = () => {
         localStorage.removeItem("email")
         localStorage.removeItem("isAdmin")
@@ -68,14 +102,14 @@ class NavBar extends Component {
                     // trigger='click'
                     overlay={menu(this.handleLogout)}
                 >
-                    <a className='ant-dropdown-link'>
+                    <Link className='ant-dropdown-link'>
                         <Avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png' />
                         <span className='header__avatar--name'>
                             <span className='header__avatar--user'>Tri Hieu</span>
                             <span className='header__avatar--rank'>1000</span>
                         </span>
                         <CaretDownOutlined />
-                    </a>
+                    </Link>
                 </Dropdown>
                 {}
             </Menu>

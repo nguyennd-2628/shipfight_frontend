@@ -1,75 +1,85 @@
-import React from 'react'
-import {Card, Typography, Table, Layout} from 'antd'
-import {Link} from "react-router-dom";
+import React, { Component } from 'react';
+import { Table, Space, Layout, Typography } from 'antd';
+import { Link } from "react-router-dom";
+import axios from "axios";
 import NavBar from "../../components/navbar/NavBar";
-const { Header, Content, Footer } = Layout;
-const data = [
 
-];
+const { Title } = Typography;
 
-for (let index = 0; index < 20; index++) {
-    data.push({
-        top: index+1,
-        username: 'quynh' + index,
-        point: 5000 - index * 10
-    })
-}
 const columns = [
     {
         title: 'Rank',
-        dataIndex: 'top',
-        key: 'top',
-        render: (top) => <Typography.Title level={top > 1 ? top > 3 ? 4 : 3 : 2}>{top}</Typography.Title>,
-        fixed: 'left',
-        width: 272
+        key: 'index',
+        render: (text, record, index) => index+1,
     },
     {
-        title: 'Username',
-        dataIndex: 'username',
-        key: 'username',
-        render: (username, record) => <Typography.Title  level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{username}</Typography.Title>,
-        ellipsis: true,
-        width: 172
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
     },
     {
         title: 'Point',
-        key: 'point',
-        dataIndex: 'point',
-        align: 'right',
-        render: (point, record) => <Typography.Title code level={record.top > 1 ? record.top > 3 ? 4 : 3 : 2}>{point}</Typography.Title>
+        dataIndex: 'ranking_point',
+        key: 'ranking_point',
     },
+    {
+        title: 'Action',
+        key: 'Action',
+        render: text => (
+            <Space size="middle">
+                <Link>View</Link>
+            </Space>
+        )
+    }
+];
 
- ];
 
-function Rankings(props) {
-    return (
-        <div className="Rankings">
+class Ranking extends Component {
+    state = {
+        users: [],
+        pagination: {
+            current: 1,
+            pageSize: 10,
+        },
+    }
+
+    componentDidMount() {
+        axios.get(`https://battle-ship-back-end-2020.herokuapp.com/users`)
+            .then(res => {
+                const users = res.data.userName;  
+                users.sort((a, b) => a.ranking_point - b.ranking_point).reverse();
+                this.setState({ users });
+
+            })
+            .catch(error => console.log(error));
+
+        
+    }
+
+    handleTableChange = (pagination) => {
+        this.setState({ 
+            pagination: {
+                ...pagination
+            } 
+        });
+    }
+
+    render() {
+        return (
             <Layout className="layout">
                 <NavBar />
-                <Content className='main'>
-        <div className="site-layout-background" >
-            <Card style={{ width: '100%', marginTop: 16 }} >
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    showHeader={true}
-                    pagination={{
-                        showSizeChanger: false,
-                        pageSize: 100,
-                    }}
-                    onRow={(record, rowIndex) => {
-                        return {
-                            onClick: event => {}
-                        }
-                    }}
-                    scroll={{x: true}}
-                />
-            </Card>
-        </div>
-                </Content>
+                <div className="site-layout-content" style={{ minHeight: '900px'}}>
+                    <Title>Ranking</Title>
+                    <Table
+                        columns={columns}
+                        dataSource={this.state.users}
+                        pagination={this.state.pagination}
+                        onChange={this.handleTableChange}
+                    />
+                </div>
             </Layout>
-        </div>
-    )
+        );
+    }
 }
 
-export default Rankings
+export default Ranking;

@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import {Table, Space, Typography, Input, Button, Layout, Row, Col} from 'antd';
-import axios from 'axios';
-import { SearchOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
+import { Button, Layout, Row, Col} from 'antd';
 import '../../App.css';
 import NavBar from "../../components/navbar/NavBar";
 import './Profile.css'
 import {Link} from "react-router-dom";
 
-const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 class Profile extends Component {
     // componentDidMount() {

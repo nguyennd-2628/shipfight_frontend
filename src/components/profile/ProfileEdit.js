@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import {Typography, Layout, Row, Col, Form, Input, InputNumber, Button, notification} from 'antd';
+import { Layout, Form, Input, Button, notification} from 'antd';
 import axios from 'axios';
-import { SearchOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
 import '../../App.css';
 import NavBar from "../../components/navbar/NavBar";
 import './Profile.css'
 import {Link, Redirect} from "react-router-dom";
 
-const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const layout = {
     labelCol: { span: 8 },
@@ -59,7 +56,7 @@ class ProfileEdit extends Component {
     };
 
     onSubmit = (e) => {
-        if(this.state.password != this.state.repassword) {
+        if(this.state.password !== this.state.repassword) {
             notification.open({
                 type: 'error',
                 message: 'Error',
@@ -69,7 +66,7 @@ class ProfileEdit extends Component {
         }
         else if (this.state.password !== '' && this.state.repassword !== '') {
             var data;
-            if(this.state.avartar_url == ''){
+            if(this.state.avartar_url === ''){
                 data = {
                     email : this.state.email,
                     password : this.state.password,
