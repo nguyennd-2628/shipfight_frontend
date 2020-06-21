@@ -11,7 +11,8 @@ import Register from "../components/auth/Register";
 import Ranking from "../components/rankings/Ranking";
 import Board from "../views/user/game-play/Board";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
+// const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
+const ENDPOINT = "";
 const socket = socketIOClient(ENDPOINT);
 
 const Routes = () => (
