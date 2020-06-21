@@ -87,19 +87,15 @@ function Square(props) {
 class Board extends Component {
     constructor(props) {
         super(props);
-        let loggedIn  = true;
-        let isAdmin = true;
-        const email = localStorage.getItem("email")
-        const adminToken = localStorage.getItem("isAdmin")
-
-        if (email == null) {
-            loggedIn = false
-        }
-        if (adminToken == null ) {
-            isAdmin = false
-        }
+        const userToken = localStorage.getItem("user") || null            // get default user infor
+        const loggedIn  = (userToken === null) ? false : true 
+        const user = (loggedIn) ? JSON.parse(userToken) : null
+        let isAdmin = true
+        if( user === null) isAdmin = false
+        else if( user.role === 'user' ) isAdmin = false
 
         this.state = {
+            user,
             loggedIn,
             isAdmin,
             squares: Array(FIELD_WIDTH * FIELD_HEIGHT).fill(null),

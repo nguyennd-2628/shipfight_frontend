@@ -66,8 +66,6 @@ class Login extends Component {
                     description: 'You are logged in!',
                     duration: 2
                 });
-                console.log(res.data.userName)
-                // localStorage.setItem("user",JSON.stringify(res.data.userName));
                 localStorage.setItem("user", JSON.stringify(res.data.userName));
                 this.setState({
                     loggedIn: true

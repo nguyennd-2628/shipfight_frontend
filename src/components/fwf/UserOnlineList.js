@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button , notification} from 'antd';
+import { Redirect } from 'react-router-dom';
+import { SyncOutlined } from '@ant-design/icons';
 
 class UserOnlineList extends Component {
     constructor(props) {
@@ -15,6 +17,8 @@ class UserOnlineList extends Component {
             loggedIn,
             isAdmin,
             visible: false,
+            waitingVisible: false,
+            matchingSuccess: false,
             usersOnline: []
         }
         props.socket.on('s2c_online_list', data => {
@@ -22,7 +26,31 @@ class UserOnlineList extends Component {
         })
         props.socket.on('s2c_thach_dau', data => {
             if (data.success === 0) alert('failed to send an invitation to challenge');
-            else alert('Sent an invitation to challenge');
+            else {
+                this.setState({
+                    visible : false,
+                    waitingVisible : true
+                })
+            }
+        })
+        props.socket.on('s2c_chap_nhan', (data) => {
+            if (data.success === 1){
+                this.setState({ 
+                    matchingSuccess: true 
+                });
+            }
+            else {
+                notification.open({
+                    type: 'error',
+                    message: 'Nguoi choi dang ban',
+                    description: 'Nguoi choi dang ban',
+                    duration: 2
+                });
+                this.setState({
+                    waitingVisible : false,
+                    visible : true
+                })
+            }
         })
     }
 
@@ -47,6 +75,14 @@ class UserOnlineList extends Component {
         });
     };
 
+    handleWaitingCancel = e =>{       
+        this.props.socket.emit('c2s_cancel_thach_dau')
+        this.setState = {
+            visible :true,
+            waitingVisible: false
+        }
+    }
+
     handleInvite = (e) => {
         var socketId = e.currentTarget.value;
         this.props.socket.emit('c2s_thach_dau', socketId);
@@ -55,7 +91,7 @@ class UserOnlineList extends Component {
 
     renderUsersOnline = () => {
          const users = this.state.usersOnline.filter(user => {
-            if (user.infor.email !== this.state.user.email) return user;
+            if (user.infor.email !== this.state.user.email && user.status === 1) return user;
             else return null;
         })
         return (
@@ -68,6 +104,7 @@ class UserOnlineList extends Component {
     }
 
     render() {
+        if(this.state.matchingSuccess) return <Redirect to='/game-play' />
         return (
             <div>
                 <Button type="primary" onClick={this.showModal} block>
@@ -80,6 +117,14 @@ class UserOnlineList extends Component {
                     onCancel={this.handleCancel}
                 >
                     {this.renderUsersOnline()}
+                </Modal>
+                <Modal
+                    title="Online User"
+                    visible={this.state.waitingVisible}
+                    onCancel={this.handleWaitingCancel}
+                >
+                    Waiting Player confirm   
+                    <SyncOutlined spin />
                 </Modal>
             </div>
         );
