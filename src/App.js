@@ -5,6 +5,7 @@ import NavBar from "./components/navbar/NavBar";
 import { Redirect, Link } from 'react-router-dom';
 import UserOnlineList from './components/fwf/UserOnlineList';
 import HasInvite from './components/fwf/HasInvite';
+import AutoMatching from './components/autoMatching/AutoMatching'
 import Help from './components/help/Help';
 
 const { Content } = Layout;
@@ -36,15 +37,11 @@ class App extends Component {
             <div className="site-layout-content">
               <br />
               <br />
-              <Link to='/game-play'>
-                <Button type="primary" block>
-                  Fight
-                </Button>
-              </Link>
+              <AutoMatching socket={this.props.socket} />
               <UserOnlineList socket={this.props.socket} />
               <Button type="primary" block>
                 Fight with Bot
-                            </Button>
+              </Button>
               <Link to='/Ranking'>
                 <Button type='primary' block>
                   Ranking
