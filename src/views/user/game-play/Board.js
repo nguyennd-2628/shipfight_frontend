@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {Button, Layout, Row} from "antd";
+import {Button, Layout, Row, message} from "antd";
+import Congratulation from '../../../components/congratulation/Congratulations'
+import Sorry from '../../../components/congratulation/Sorry'
+
 import './Board.css'
 import {
     FIELD_HEIGHT,
@@ -112,7 +115,9 @@ class Board extends Component {
             squares: Array(FIELD_WIDTH * FIELD_HEIGHT).fill(null),
             playerOneIsNext,
             setPlaneTurnLeft: MAX_PLANE * 2,
-            announce: ''
+            announce: '',
+            congratulationFrame: false,
+            sorryFrame: false
         }
         props.socket.on('s2c_play_game',(data)=>{
             if( data.success === 0 ){
@@ -159,9 +164,14 @@ class Board extends Component {
             }
         }
 
-        if (playerOneDeadPlaneCount >= MAX_PLANE) return 'Player Two Win';
-        if (playerTwoDeadPlaneCount >= MAX_PLANE) return 'Player One Win';
-
+        if (playerOneDeadPlaneCount >= MAX_PLANE) return{ 
+                                                            message: 'Congratulations '+ this.state.enemyInfor.name + ' Win',
+                                                            youWin : false
+                                                        };
+        if (playerTwoDeadPlaneCount >= MAX_PLANE) return{
+                                                            message: 'congratulations '+ this.state.user.name +' Win',
+                                                            youWin : true
+                                                        }
         return null;
     };
 
@@ -362,7 +372,13 @@ class Board extends Component {
         const winner = this.calculateWinner();
         let status;
         if (winner) {
-            status = 'Winner: ' + winner;
+            status = 'Winner: ' + winner.message;
+            if(winner.youWin){
+                this.state.congratulationFrame = true
+            }
+            else{
+                this.state.sorryFrame = true
+            }
         } else {
             status = 'Next player: ' + (playerOneIsNext ? this.state.user.name : this.state.enemyInfor.name );
         }
@@ -376,6 +392,8 @@ class Board extends Component {
                         {this.renderBoard(squares)}
                     </div>
                 </Content>
+                <Congratulation visible ={this.state.congratulationFrame} />
+                <Sorry visible = {this.state.sorryFrame}/>
             </Layout>
         );
     }
