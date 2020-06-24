@@ -46,7 +46,9 @@ class NavBar extends Component {
 	}
 	handleLogout = () => {
 		localStorage.removeItem("user");
-		if(!this.state.isAdmin && this.state.loggedIn) this.props.socket.emit('logout');
+		if(!this.state.isAdmin && this.props.socket){
+			this.props.socket.emit('logout');
+		}
 		window.location.reload('/login');
 	};
 	render() {
