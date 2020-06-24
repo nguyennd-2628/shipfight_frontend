@@ -46,7 +46,7 @@ class NavBar extends Component {
 	}
 	handleLogout = () => {
 		localStorage.removeItem("user");
-		this.props.socket.emit('logout');
+		if (!this.state.isAdmin) this.props.socket.emit('logout');
 		window.location.reload('/login');
 	};
 	render() {
@@ -96,7 +96,7 @@ const Home = () => (
 		<EditOutlined />
 		<Link to="/">
 			Home
-        </Link>
+    </Link>
 	</Menu.Item>
 )
 
