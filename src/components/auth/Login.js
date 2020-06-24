@@ -92,7 +92,6 @@ class Login extends Component {
         if (this.state.clickedRegister) {
             return <Redirect to={{ pathname: '/register' }} />
         }
-
         return (
             <Layout className="layout">
                 <NavBar />
