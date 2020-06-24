@@ -28,11 +28,16 @@ class UserOnlineList extends Component {
             this.setState({ usersOnline: data })
         })
         props.socket.on('s2c_thach_dau', data => {
-            if (data.success === 0) alert('failed to send an invitation to challenge');
-            else {
+            if (data.success === 0){
+                notification.open({
+                    type: 'error',
+                    message: 'Nguoi choi dang ban',
+                    description: 'Nguoi choi dang ban',
+                    duration: 2
+                });
                 this.setState({
-                    visible: false,
-                    waitingVisible: true
+                    visible: true,
+                    waitingVisible: false
                 })
             }
         })
@@ -99,7 +104,8 @@ class UserOnlineList extends Component {
         this.setState({
             enemyInfor,
             enemySocketId: socketId,
-            visible: false
+            visible: false,
+            waitingVisible: true
         });
     }
 
