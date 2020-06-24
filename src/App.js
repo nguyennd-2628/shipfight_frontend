@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     const userToken = localStorage.getItem("user") || null            // get default user infor
-    const loggedIn  = (userToken === null) ? false : true 
+    const loggedIn  = (userToken === null) ? false : true
     const user = (loggedIn) ? JSON.parse(userToken) : null
     let isAdmin = true
     if( user === null) isAdmin = false
@@ -26,6 +26,10 @@ class App extends Component {
     if (loggedIn) props.socket.emit('c2s_online_alert', user);
   }
 
+  handlePlayVsBot = ()=>{
+    this.props.socket.emit('c2s_play_with_bot')
+  }
+  
   render() {
     if (!this.state.loggedIn) return <Redirect to='/login' />
     else if (this.state.isAdmin) return <Redirect to={{ pathname: '/admin/user-list' }} />
@@ -39,9 +43,11 @@ class App extends Component {
               <br />
               <AutoMatching socket={this.props.socket} />
               <UserOnlineList socket={this.props.socket} />
-              <Button type="primary" block>
-                Fight with Bot
-              </Button>
+              <Link to='/bot-play'>
+                <Button type="primary" block onClick = {this.handlePlayVsBot}>
+                  Fight with Bot
+                </Button>
+              </Link>
               <Link to='/Ranking'>
                 <Button type='primary' block>
                   Ranking

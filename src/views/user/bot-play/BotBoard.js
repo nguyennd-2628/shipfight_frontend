@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Button, Row} from "antd";
-import '../game-play/Board.css'
+import {Button, Layout, Row} from "antd";
+import './BotBoard.css'
 import {
     FIELD_HEIGHT,
     FIELD_WIDTH,
@@ -14,6 +14,10 @@ import {
     PLANE_ONE_MISSED,
     PLANE_TWO_MISSED
 } from "../../common/Constant";
+import NavBar from "../../../components/navbar/NavBar";
+import {Link, Redirect} from "react-router-dom";
+
+const { Content } = Layout;
 
 function Square(props) {
     switch (props.value) {
@@ -83,13 +87,49 @@ function Square(props) {
 class BotBoard extends Component {
     constructor(props) {
         super(props);
+        const userToken = localStorage.getItem("user") || null;            // get default user infor
+        const loggedIn  = (userToken === null) ? false : true;
+        const user = (loggedIn) ? JSON.parse(userToken) : null;
+        let isAdmin = true;
+        if( user === null) isAdmin = false;
+        else if( user.role === 'user' ) isAdmin = false;
+
         this.state = {
+            user,
+            loggedIn,
+            isAdmin,
             squares: Array(FIELD_WIDTH * FIELD_HEIGHT).fill(null),
             playerOneIsNext: true,
             setPlaneTurnLeft: MAX_PLANE * 2,
             announce: ''
         }
+        
     }
+
+    componentWillUnmount(){
+        this.props.socket.emit("c2s_end_game")
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {playerOneIsNext} = this.state;
+        if (!playerOneIsNext) {
+            this.waitPlayerTwo();
+        }
+    }
+
+    waitPlayerTwo = () => {
+        const {squares} = this.state;
+        let botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
+        while (squares[botRandomPosition] === PLANE_ONE_DEAD ||
+           squares[botRandomPosition] === PLANE_TWO_DEAD ||
+           squares[botRandomPosition] === PLANE_TWO_ALIVE ||
+           squares[botRandomPosition] === PLANE_ONE_MISSED ||
+           squares[botRandomPosition] === PLANE_TWO_MISSED
+        ){
+           botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
+        }
+        setTimeout(() => this.handlePlayerTwoTurn(botRandomPosition), 100);
+    };
 
     calculateWinner = () => {
         const {squares, setPlaneTurnLeft} = this.state;
@@ -100,10 +140,10 @@ class BotBoard extends Component {
         let playerTwoDeadPlaneCount = 0;
 
         for (let i = 0; i < FIELD_WIDTH * FIELD_HEIGHT - 1; i++) {
-            if (squares[i] == PLANE_ONE_DEAD) {
+            if (squares[i] === PLANE_ONE_DEAD) {
                 playerOneDeadPlaneCount += 1;
             }
-            if (squares[i] == PLANE_TWO_DEAD) {
+            if (squares[i] === PLANE_TWO_DEAD) {
                 playerTwoDeadPlaneCount += 1;
             }
         }
@@ -112,7 +152,7 @@ class BotBoard extends Component {
         if (playerTwoDeadPlaneCount >= MAX_PLANE) return 'Player One Win';
 
         return null;
-    }
+    };
 
     handleClick(i) {
         const {playerOneIsNext, setPlaneTurnLeft} = this.state;
@@ -120,6 +160,9 @@ class BotBoard extends Component {
         let announceMessage = '';
         // neu co nguoi thang => game over
         if (this.calculateWinner()) {
+            return;
+        }
+        if (!playerOneIsNext) {
             return;
         }
 
@@ -179,8 +222,29 @@ class BotBoard extends Component {
                 }
             }
         }
+
+        this.setState({
+            squares: squares,
+            playerOneIsNext: !this.state.playerOneIsNext,
+            setPlaneTurnLeft: setPlaneTurnLeft - 1,
+            announce: announceMessage
+        });
+    }
+
+    handlePlayerTwoTurn(i) {
+        const {playerOneIsNext, setPlaneTurnLeft} = this.state;
+        const squares = this.state.squares.slice();
+        let announceMessage = '';
+        // neu co nguoi thang => game over
+        if (this.calculateWinner()) {
+            return;
+        }
+        if (playerOneIsNext) {
+            return;
+        }
+
         /* player 2's turn */
-        else {
+        if (!playerOneIsNext) {
             if (setPlaneTurnLeft > 0) {
                 if (squares[i] === null) {
                     squares[i] = PLANE_TWO_ALIVE;
@@ -271,6 +335,13 @@ class BotBoard extends Component {
     }
 
     render() {
+        if(!this.state.loggedIn){
+            return <Redirect  to='/login' />
+        }
+        else if (this.state.isAdmin) {
+            return <Redirect to={{ pathname: '/admin/user-list' }} />
+        }
+
         const {squares, playerOneIsNext, announce} = this.state;
         const winner = this.calculateWinner();
         let status;
@@ -281,11 +352,16 @@ class BotBoard extends Component {
         }
 
         return (
-            <div>
-                <Row style={{height:50}}><h1 className="announce">{announce}</h1></Row>
-                <Row style={{height:50}}><h2 className="status">{status}</h2></Row>
-                {this.renderBoard(squares)}
-            </div>
+            <Layout className="layout">
+                <NavBar />
+                <Content className='game-play'>
+                    <div>
+                        <Row style={{height: 50}}><h1 className="announce">{announce}</h1></Row>
+                        <Row style={{height: 50}}><h2 className="status">{status}</h2></Row>
+                        {this.renderBoard(squares)}
+                    </div>
+                </Content>
+            </Layout>
         );
     }
 }
