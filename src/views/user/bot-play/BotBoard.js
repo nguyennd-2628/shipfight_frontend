@@ -107,7 +107,7 @@ class BotBoard extends Component {
             congratulationFrame: false,
             sorryFrame: false
         }
-        
+
     }
 
     componentWillUnmount(){
@@ -157,7 +157,7 @@ class BotBoard extends Component {
         }
         if (playerTwoDeadPlaneCount >= MAX_PLANE){
             return 'Player One Win';
-        } 
+        }
 
         return null;
     };
@@ -324,9 +324,9 @@ class BotBoard extends Component {
         for (let j = 0; j < FIELD_WIDTH; j++) {
             items.push(
                 <Square
-                    key={i * 10 + j}
-                    value={this.state.squares[i * 10 + j]}
-                    onClick={() => this.handleClick(i * 10 + j)}
+                    key={i * FIELD_WIDTH + j}
+                    value={this.state.squares[i * FIELD_WIDTH + j]}
+                    onClick={() => this.handleClick(i * FIELD_WIDTH + j)}
                 />
             );
         }
