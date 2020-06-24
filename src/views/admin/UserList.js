@@ -111,8 +111,7 @@ class UserList extends Component {
     });
 
     handleDelete = (e) => {
-        alert(e.target.value)
-        const id = e.target.value
+        const id = e.target.name
         axios.delete('https://battle-ship-back-end-2020.herokuapp.com/users/'+id)
         .then((res)=>{
             notification.open({
@@ -121,6 +120,10 @@ class UserList extends Component {
                 description: 'Delete Data Success',
                 duration: 2
             });
+            const users = this.state.users.filter(user=> user.id != id )
+            this.setState({
+                users : users
+            })
         })
         .catch((err)=>{
             notification.open({
@@ -168,7 +171,7 @@ class UserList extends Component {
                 render: (text,record) => (
                     <Space size="middle">
                         <Link to={'/profile/'+record.id} >View </Link>
-                        <Link value = {record.id} onClick = {this.handleDelete}>Delete</Link>
+                        <Link value={record.id} name={record.id} className = {record.id} onClick = {this.handleDelete}>Delete</Link>
                     </Space>
                 )
             }

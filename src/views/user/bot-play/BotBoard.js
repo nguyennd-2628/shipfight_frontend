@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Button, Layout, Row} from "antd";
+import Congratulation from '../../../components/congratulation/Congratulations'
+
 import './BotBoard.css'
 import {
     FIELD_HEIGHT,
@@ -101,7 +103,9 @@ class BotBoard extends Component {
             squares: Array(FIELD_WIDTH * FIELD_HEIGHT).fill(null),
             playerOneIsNext: true,
             setPlaneTurnLeft: MAX_PLANE * 2,
-            announce: ''
+            announce: '',
+            congratulationFrame: false,
+            sorryFrame: false
         }
         
     }
@@ -148,8 +152,12 @@ class BotBoard extends Component {
             }
         }
 
-        if (playerOneDeadPlaneCount >= MAX_PLANE) return 'Player Two Win';
-        if (playerTwoDeadPlaneCount >= MAX_PLANE) return 'Player One Win';
+        if (playerOneDeadPlaneCount >= MAX_PLANE){
+            return 'Player Two Win';
+        }
+        if (playerTwoDeadPlaneCount >= MAX_PLANE){
+            return 'Player One Win';
+        } 
 
         return null;
     };
@@ -237,6 +245,9 @@ class BotBoard extends Component {
         let announceMessage = '';
         // neu co nguoi thang => game over
         if (this.calculateWinner()) {
+            // this.setState({
+            //     sorryFrame : true
+            // })
             return;
         }
         if (playerOneIsNext) {
@@ -347,6 +358,7 @@ class BotBoard extends Component {
         let status;
         if (winner) {
             status = 'Winner: ' + winner;
+            this.state.congratulationFrame = true
         } else {
             status = 'Next player: ' + (playerOneIsNext ? 'Player One' : 'Player Two');
         }
@@ -361,6 +373,7 @@ class BotBoard extends Component {
                         {this.renderBoard(squares)}
                     </div>
                 </Content>
+                <Congratulation visible ={this.state.congratulationFrame} />
             </Layout>
         );
     }
