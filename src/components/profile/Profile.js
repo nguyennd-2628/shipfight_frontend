@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Layout, Row, Col } from 'antd';
+import {Button, Layout, Row, Col, Avatar} from 'antd';
 import '../../App.css';
 import NavBar from "../../components/navbar/NavBar";
 import './Profile.css'
@@ -103,7 +103,7 @@ class Profile extends Component {
 					<div className="site-layout-content-profile">
 						<Row className='student-view__row'>
 							<Col span={6}>
-								<img src={this.state.user.avartar_url} alt="Avatar" width="100%" />
+								<Avatar src={this.state.user.avartar_url} style={{width: 'calc(25vw - 75px)', height: 'calc(25vw - 75px)'}}/>
 								<div style={{ textAlign: "center", marginTop: 20 }}><span>{this.state.user.ranking_point}</span> <span>Points</span></div>
 								<div style={{ textAlign: "center" }}><span>Rank:</span> <span>{this.state.ranking}</span></div>
 							</Col>

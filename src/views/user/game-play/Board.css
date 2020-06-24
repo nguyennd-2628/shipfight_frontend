@@ -5,8 +5,34 @@
 }
 
 .game-play {
-    padding-left: 200px;
-    padding-top: 70px;
+    padding: 100px 50px;
+    background-color: #E0E0E0;
+}
+
+.site-layout-content-board {
+    align-content: center;
+    padding: 50px 50px;
+    min-width: 600px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    min-height: 60vh;
+    background-color: #ffffff;
+    margin: auto;
+}
+
+.site-layout-content-board button{
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    height: 50px;
+}
+
+.site-layout-content-board .ant-row{
+    margin: auto;
+    width: 420px;
+}
+
+.bordered {
+    border: aquamarine 5px solid;
 }
 
 .water-square {
@@ -20,14 +46,14 @@
 .player1-alive-square {
     width: 60px !important;
     height: 60px !important;
-    background-image: url('https://scontent.fhph1-2.fna.fbcdn.net/v/t1.0-9/83016114_2682096325401524_2053949824067911700_n.jpg?_nc_cat=105&_nc_sid=730e14&_nc_ohc=I_8tCQY0TWEAX-Xmfdd&_nc_ht=scontent.fhph1-2.fna&oh=16d520a2cab777db130bc54e996c82ad&oe=5F11893D') !important;
+    background-image: url('https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/106066195_2688258101452013_4611138131769170817_n.jpg?_nc_cat=109&_nc_sid=730e14&_nc_ohc=IOuOdepASP0AX_TvJqZ&_nc_ht=scontent.fhan3-1.fna&oh=6d0a072f69482c2c0ae763d756d8c1da&oe=5F18BB75') !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
 }
 .player1-exposed-square {
     width: 60px !important;
     height: 60px !important;
-    background-image: url('https://scontent.fhph1-2.fna.fbcdn.net/v/t1.0-9/103598410_2682096252068198_2707014290122804769_n.jpg?_nc_cat=107&_nc_sid=730e14&_nc_ohc=7p84mpRy5_IAX_dt6BK&_nc_ht=scontent.fhph1-2.fna&oh=985d236b51b7b2f792d692a2749a7e11&oe=5F0F4E91') !important;
+    background-image: url('https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/106099119_2688258058118684_1506404258189068616_n.jpg?_nc_cat=102&_nc_sid=730e14&_nc_ohc=V0hFTuNbvy4AX9TYANY&_nc_ht=scontent.fhan3-1.fna&oh=c4649e3ae9565a61c53826606bb7a21c&oe=5F1B1327') !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
 }
@@ -43,7 +69,7 @@
 .player2-alive-square {
     width: 60px !important;
     height: 60px !important;
-    background-image: url('https://scontent.fhph1-2.fna.fbcdn.net/v/t1.0-9/102675573_2682096245401532_4050945332495324937_n.jpg?_nc_cat=101&_nc_sid=730e14&_nc_ohc=ffXJ-GvBTrsAX9jwVSL&_nc_ht=scontent.fhph1-2.fna&oh=11cd973462a0c2d28e47ff9a5075d1f6&oe=5F1180A1') !important;
+    background-image: url('https://scontent.fhph1-2.fna.fbcdn.net/v/t1.0-9/103464282_2682096182068205_5987664221771131850_n.jpg?_nc_cat=107&_nc_sid=730e14&_nc_ohc=J-ua0z3zVxcAX8MYaHG&_nc_ht=scontent.fhph1-2.fna&oh=dd5374cc4629e9e623a42d0806c338b3&oe=5F10AA87') !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
 }
@@ -56,6 +82,7 @@
     background-size: contain !important;
 }
 
+
 .player2-dead-square {
     width: 60px !important;
     height: 60px !important;
@@ -67,7 +94,7 @@
 .missed-square {
     width: 60px !important;
     height: 60px !important;
-    background-image: url('https://scontent.fhph1-2.fna.fbcdn.net/v/t1.0-9/104436674_2682096198734870_8122133331381051317_n.jpg?_nc_cat=108&_nc_sid=730e14&_nc_ohc=8Ku29bGjlZ4AX-x2g-U&_nc_ht=scontent.fhph1-2.fna&oh=4f2fba70120131c2d3be4fc36a479839&oe=5F0EE6EE') !important;
+    background-image: url('https://scontent.fhan4-1.fna.fbcdn.net/v/t1.0-9/104713257_2688267234784433_40563335394181878_n.jpg?_nc_cat=104&_nc_sid=730e14&_nc_ohc=V-9mhC_DbuIAX9iAG2p&_nc_ht=scontent.fhan4-1.fna&oh=4bb989efc7fc9ac4141b2fae1b3500d8&oe=5F1A4A50') !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
 }

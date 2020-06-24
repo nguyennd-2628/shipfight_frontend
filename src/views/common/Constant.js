@@ -10,6 +10,6 @@ export const PLANE_ONE_MISSED = 6;
 export const PLANE_TWO_MISSED = 7;
 
 export const MAX_PLANE = 5;
-export const FIELD_WIDTH = 10;
-export const FIELD_HEIGHT = 10;
+export const FIELD_WIDTH = 7;
+export const FIELD_HEIGHT = 7;
 

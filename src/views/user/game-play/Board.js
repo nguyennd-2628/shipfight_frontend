@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Layout, Row, message} from "antd";
+import {Button, Layout, Row, message, Col, Avatar} from "antd";
 import Congratulation from '../../../components/congratulation/Congratulations'
 import Sorry from '../../../components/congratulation/Sorry'
 
@@ -99,13 +99,13 @@ class Board extends Component {
         let enemySocketId = null;
         let enemyInfor = null;
         let playerOneIsNext = true;
-        if(props.location.state){        
+        if(props.location.state){
             enemySocketId = props.location.state.enemySocketId
             enemyInfor = props.location.state.enemyInfor
             if(!props.location.state.turn){
                 playerOneIsNext = false
             }
-        }      
+        }
         this.state = {
             user,
             loggedIn,
@@ -133,20 +133,6 @@ class Board extends Component {
         this.props.socket.emit("c2s_end_game")
     }
 
-    waitPlayerTwo = () => {
-        const {squares} = this.state;
-        let botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
-        while (squares[botRandomPosition] === PLANE_ONE_DEAD ||
-            squares[botRandomPosition] === PLANE_TWO_DEAD ||
-            squares[botRandomPosition] === PLANE_TWO_ALIVE ||
-            squares[botRandomPosition] === PLANE_ONE_MISSED ||
-            squares[botRandomPosition] === PLANE_TWO_MISSED
-            ) {
-            botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
-        }
-        setTimeout(() => this.handlePlayerTwoTurn(botRandomPosition), 100);
-    };
-
     calculateWinner = () => {
         const {squares, setPlaneTurnLeft} = this.state;
 
@@ -164,12 +150,12 @@ class Board extends Component {
             }
         }
 
-        if (playerOneDeadPlaneCount >= MAX_PLANE) return{ 
+        if (playerOneDeadPlaneCount >= MAX_PLANE) return{
                                                             message: 'Congratulations '+ this.state.enemyInfor.name + ' Win',
                                                             youWin : false
                                                         };
         if (playerTwoDeadPlaneCount >= MAX_PLANE) return{
-                                                            message: 'congratulations '+ this.state.user.name +' Win',
+                                                            message: 'Congratulations '+ this.state.user.name +' Win',
                                                             youWin : true
                                                         }
         return null;
@@ -193,24 +179,24 @@ class Board extends Component {
             if (setPlaneTurnLeft > 0) {
                 if (squares[i] === null) {
                     squares[i] = PLANE_ONE_ALIVE;
-                    announceMessage = `Player 1 placed a plane`;
+                    announceMessage = `Placed ship success`;
                 }
                 else if (squares[i] === PLANE_TWO_ALIVE){
                     squares[i] = PLANE_TWO_EXPOSED;
                     this.setState({
                         squares: squares,
-                        announce: `Detected player2 plane.\nPlease choose another position!`
+                        announce: `Detected ${this.state.enemyInfor.name} ship.\nPlease choose another position!`
                     });
                     return;
                 }
                 else if (squares[i] === PLANE_TWO_EXPOSED){
                     this.setState({
-                        announce: `Detected player2 plane.\nPlease choose another position!`
+                        announce: `You already detected that ship.\nPlease choose another position!`
                     });
                     return;
                 }
                 else if (squares[i] === PLANE_ONE_ALIVE || squares[i] === PLANE_ONE_EXPOSED){
-                    announceMessage = 'This position has already been placed plane.\nPlease choose another position!';
+                    announceMessage = 'This position has already been placed ship.\nPlease choose another position!';
                     this.setState({
                         announce: announceMessage
                     });
@@ -221,10 +207,10 @@ class Board extends Component {
             else {
                 if (squares[i] === PLANE_TWO_ALIVE || squares[i] === PLANE_TWO_EXPOSED){
                     squares[i] = PLANE_TWO_DEAD;
-                    announceMessage = `Shot HIT!!\nA plane of player2 has been terminated`;
+                    announceMessage = `Shot HIT!!\nOne of ${this.state.enemyInfor.name}'s ships has been terminated`;
                 }
                 else if (squares[i] === PLANE_ONE_ALIVE || squares[i] === PLANE_ONE_EXPOSED){
-                    announceMessage = `Can't shoot allies plane.\nPlease choose another position!`;
+                    announceMessage = `Can't shoot allies ship.\nPlease choose another position!`;
                     this.setState({
                         announce: announceMessage
                     });
@@ -232,7 +218,7 @@ class Board extends Component {
                 }
                 else if (squares[i] === null){
                     squares[i] = PLANE_ONE_MISSED;
-                    announceMessage = `Player1 missed!`;
+                    announceMessage = `You missed!`;
                 }
                 else {
                     announceMessage = `That position has already been shot.\nPlease choose another position!`;
@@ -243,7 +229,7 @@ class Board extends Component {
                 }
             }
         }
-        
+
         let dataToSend = {
             enemySocketId : this.state.enemySocketId,
             playCommand : i
@@ -275,24 +261,24 @@ class Board extends Component {
             if (setPlaneTurnLeft > 0) {
                 if (squares[i] === null) {
                     squares[i] = PLANE_TWO_ALIVE;
-                    announceMessage = `Player 2 placed a plane`;
+                    announceMessage = `Player ${this.state.enemyInfor.name} placed a ship`;
                 }
                 else if (squares[i] === PLANE_ONE_ALIVE){
                     squares[i] = PLANE_ONE_EXPOSED;
                     this.setState({
                         squares: squares,
-                        announce: `Detected player1 plane.\nPlease choose another position!`
+                        announce: `One of your ship has been detected`
                     });
                     return;
                 }
                 else if (squares[i] === PLANE_ONE_EXPOSED){
                     this.setState({
-                        announce: `Detected player1 plane.\nPlease choose another position!`
+                        announce: ``
                     });
                     return;
                 }
                 else if (squares[i] === PLANE_TWO_ALIVE || squares[i] === PLANE_TWO_EXPOSED){
-                    announceMessage = 'This position has already been placed plane.\nPlease choose another position!';
+                    announceMessage = '';
                     this.setState({
                         announce: announceMessage
                     });
@@ -303,21 +289,21 @@ class Board extends Component {
             else {
                 if (squares[i] === PLANE_ONE_ALIVE || squares[i] === PLANE_ONE_EXPOSED){
                     squares[i] = PLANE_ONE_DEAD;
-                    announceMessage = `Shot HIT!!\nA plane of player1 has been terminated`;
+                    announceMessage = `Shot HIT!!\nOne of your ship has been terminated`;
                 }
-                else if (squares[i] === PLANE_TWO_ALIVE || squares[i] === PLANE_TWO_EXPOSED){
-                    announceMessage = `Can't shoot allies plane.\nPlease choose another position!`;
-                    this.setState({
-                        announce: announceMessage
-                    });
-                    return;
-                }
+                // else if (squares[i] === PLANE_TWO_ALIVE || squares[i] === PLANE_TWO_EXPOSED){
+                //     announceMessage = ``;
+                //     this.setState({
+                //         announce: announceMessage
+                //     });
+                //     return;
+                // }
                 else if (squares[i] === null){
                     squares[i] = PLANE_TWO_MISSED;
-                    announceMessage = `Player2 missed!`;
+                    announceMessage = `Player ${this.state.enemyInfor.name} missed!`;
                 }
                 else {
-                    announceMessage = `That position has already been shot.\nPlease choose another position!`;
+                    announceMessage = ``;
                     this.setState({
                         announce: announceMessage
                     });
@@ -339,9 +325,9 @@ class Board extends Component {
         for (let j = 0; j < FIELD_WIDTH; j++) {
             items.push(
                 <Square
-                    key={i * 10 + j}
-                    value={this.state.squares[i * 10 + j]}
-                    onClick={() => this.handleClick(i * 10 + j)}
+                    key={i * FIELD_WIDTH + j}
+                    value={this.state.squares[i * FIELD_WIDTH + j]}
+                    onClick={() => this.handleClick(i * FIELD_WIDTH + j)}
                 />
             );
         }
@@ -368,7 +354,7 @@ class Board extends Component {
             return <Redirect to={{ pathname: '/admin/user-list' }} />
         }
 
-        const {squares, playerOneIsNext, announce} = this.state;
+        const {squares, playerOneIsNext, announce, setPlaneTurnLeft} = this.state;
         const winner = this.calculateWinner();
         let status;
         if (winner) {
@@ -380,15 +366,44 @@ class Board extends Component {
                 this.state.sorryFrame = true
             }
         } else {
-            status = 'Next player: ' + (playerOneIsNext ? this.state.user.name : this.state.enemyInfor.name );
+            if (playerOneIsNext && setPlaneTurnLeft > 0) {
+                status = 'Your turn to place ship';
+            }
+            else if (playerOneIsNext && setPlaneTurnLeft <= 0) {
+                status = "Your turn to shoot";
+            } else {
+                status = `Wait for ${this.state.enemyInfor.name}`;
+            }
         }
+
         return (
             <Layout className="layout">
                 <NavBar />
                 <Content className='game-play'>
-                    <div>
-                        <Row style={{height: 50}}><h1 className="announce">{announce}</h1></Row>
-                        <Row style={{height: 50}}><h2 className="status">{status}</h2></Row>
+                    <div className='site-layout-content-board'>
+                        <Row style={{minHeight: 70}}><h1 className="announce">{announce}</h1></Row>
+                        <Row style={{minHeight: 50}}><h2 className="status">{status}</h2></Row>
+                        <Row>
+                            <Col span={12} style={{display: 'flex'}}>
+                                <div className={!playerOneIsNext ? '' : 'bordered'} style={{display: 'inherit', padding: 10, margin: 15}}>
+                                    <Avatar src={this.state.user.avartar_url} />
+                                    <span className='header__avatar--name' >
+                                        <span className='header__avatar--user'>{this.state.user.name}</span>
+                                        <span className='header__avatar--rank'>Point: {this.state.user.ranking_point}</span>
+                                    </span>
+                                </div>
+                            </Col>
+                            <Col span={12} style={{height: '100%', display: 'flex'}}>
+                                <div className={playerOneIsNext ? '' : 'bordered'} style={{padding: 10, margin: 15, display: 'inherit', float: "right", marginLeft: 'auto', order: 2}}>
+                                    <Avatar src={this.state.enemyInfor.avartar_url} />
+                                    <span className='header__avatar--name' >
+                                        <span className='header__avatar--user'>{this.state.enemyInfor.name}</span>
+                                        <span className='header__avatar--rank'>Point: {this.state.enemyInfor.ranking_point}</span>
+                                    </span>
+                                </div>
+                            </Col>
+                        </Row>
+
                         {this.renderBoard(squares)}
                     </div>
                 </Content>

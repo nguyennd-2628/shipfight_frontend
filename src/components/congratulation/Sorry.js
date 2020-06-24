@@ -25,7 +25,8 @@ class Sorry extends Component {
           onOk={this.handleOk}
           cancelButtonProps={{ disabled: true }}
         >
-          So Sorry ...
+          So Close ...
+          You Lose :(
         </Modal>
 
       </div>

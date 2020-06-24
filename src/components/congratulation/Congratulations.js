@@ -25,7 +25,8 @@ class Congratulations extends Component {
           onOk={this.handleOk}
           cancelButtonProps={{ disabled: true }}
         >
-          Congratulations .... 
+          You Won!
+          Well played!!
         </Modal>
 
       </div>

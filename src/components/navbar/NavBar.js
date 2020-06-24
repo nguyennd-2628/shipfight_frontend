@@ -60,7 +60,7 @@ class NavBar extends Component {
 				{this.state.isAdmin && this.state.loggedIn ? PlayerStatistic() : null}
 				{this.state.isAdmin && this.state.loggedIn ? PlayerTimeStatistic() : null}
 				{(!this.state.isAdmin ) ? AboutUs() : null}
-				{(!this.state.loggedIn ) ? <Link style={{float : "right"}} to='/login'> Login </Link> : 
+				{(!this.state.loggedIn ) ? <Link style={{float : "right"}} to='/login'> Login </Link> :
 					<Dropdown
 						className='header__avatar'
 						overlay={menu(this.handleLogout,this.state.user)}
@@ -69,7 +69,7 @@ class NavBar extends Component {
 							<Avatar src={this.state.user.avartar_url} />
 							<span className='header__avatar--name'>
 								<span className='header__avatar--user'>{this.state.user.name}</span>
-								<span className='header__avatar--rank'>{this.state.user.ranking_point}</span>
+								<span className='header__avatar--rank'>Point: {this.state.user.ranking_point}</span>
 							</span>
 							<CaretDownOutlined />
 						</Link>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Layout, Button } from 'antd';
 import NavBar from "./components/navbar/NavBar";
 import { Redirect, Link } from 'react-router-dom';
@@ -7,6 +6,7 @@ import UserOnlineList from './components/fwf/UserOnlineList';
 import HasInvite from './components/fwf/HasInvite';
 import AutoMatching from './components/autoMatching/AutoMatching'
 import Help from './components/help/Help';
+import './App.css';
 
 const { Content } = Layout;
 class App extends Component {
@@ -29,7 +29,7 @@ class App extends Component {
   handlePlayVsBot = ()=>{
     this.props.socket.emit('c2s_play_with_bot')
   }
-  
+
   render() {
     if (!this.state.loggedIn) return <Redirect to='/login' />
     else if (this.state.isAdmin) return <Redirect to={{ pathname: '/admin/user-list' }} />
