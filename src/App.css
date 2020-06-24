@@ -23,6 +23,14 @@
   background-color: #ffffff;
 }
 
+.site-layout-content1 {
+  align-content: center;
+  padding: 50px 0px;
+  width: 100%;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  min-height: 200vh;
+  background-color: #ffffff;
+}
 .site-layout-content-profile {
   align-content: center;
   padding: 50px 50px;

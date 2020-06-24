@@ -98,7 +98,7 @@ const Home = () => (
 		<EditOutlined />
 		<Link to="/">
 			Home
-        </Link>
+    </Link>
 	</Menu.Item>
 )
 
@@ -132,8 +132,8 @@ const PlayerTimeStatistic = () => (
 const AboutUs = () => (
 	<Menu.Item key="about-us" style={{ float: 'left' }}>
 		<UserOutlined />
-		<Link exact to="/">
+		<Link to="/aboutus">
 			About Us
-        </Link>
+    </Link>
 	</Menu.Item>
 )

@@ -12,6 +12,7 @@ import Ranking from "../components/rankings/Ranking";
 import Board from "../views/user/game-play/Board";
 import socketIOClient from "socket.io-client";
 import BotBoard from "../views/user/bot-play/BotBoard";
+import AboutUs from "../components/aboutus/AboutUs";
 const ENDPOINT = "https://battle-ship-back-end-2020.herokuapp.com";
 // const ENDPOINT = "http://localhost:5000";
 const socket = socketIOClient(ENDPOINT);
@@ -56,7 +57,9 @@ const Routes = () => (
         <Route path='/bot-play'>
             <BotBoard socket={socket} />
         </Route>
-
+        <Route path='/aboutus'>
+            <AboutUs />
+        </Route>
         <Route path='/'>
             <App socket={socket}/>
         </Route>

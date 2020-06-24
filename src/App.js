@@ -31,8 +31,8 @@ class App extends Component {
   }
   
   render() {
-    if (!this.state.loggedIn)  return <Redirect to='/login' />
-    else if (this.state.isAdmin)  return <Redirect to={{ pathname: '/admin/user-list' }} />
+    if (!this.state.loggedIn) return <Redirect to='/login' />
+    else if (this.state.isAdmin) return <Redirect to={{ pathname: '/admin/user-list' }} />
     return (
       <div className="App">
         <Layout className="layout">
