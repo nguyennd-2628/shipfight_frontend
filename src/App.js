@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     const userToken = localStorage.getItem("user") || null            // get default user infor
-    const loggedIn  = (userToken === null) ? false : true 
+    const loggedIn  = (userToken === null) ? false : true
     const user = (loggedIn) ? JSON.parse(userToken) : null
     let isAdmin = true
     if( user === null) isAdmin = false
@@ -39,9 +39,11 @@ class App extends Component {
               <br />
               <AutoMatching socket={this.props.socket} />
               <UserOnlineList socket={this.props.socket} />
-              <Button type="primary" block>
-                Fight with Bot
-              </Button>
+              <Link to='/bot-play'>
+                <Button type="primary" block>
+                  Fight with Bot
+                </Button>
+              </Link>
               <Link to='/Ranking'>
                 <Button type='primary' block>
                   Ranking

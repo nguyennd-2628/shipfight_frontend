@@ -87,12 +87,12 @@ function Square(props) {
 class Board extends Component {
     constructor(props) {
         super(props);
-        const userToken = localStorage.getItem("user") || null            // get default user infor
-        const loggedIn  = (userToken === null) ? false : true 
-        const user = (loggedIn) ? JSON.parse(userToken) : null
-        let isAdmin = true
-        if( user === null) isAdmin = false
-        else if( user.role === 'user' ) isAdmin = false
+        const userToken = localStorage.getItem("user") || null;            // get default user infor
+        const loggedIn  = (userToken === null) ? false : true;
+        const user = (loggedIn) ? JSON.parse(userToken) : null;
+        let isAdmin = true;
+        if( user === null) isAdmin = false;
+        else if( user.role === 'user' ) isAdmin = false;
 
         this.state = {
             user,
@@ -105,6 +105,27 @@ class Board extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {playerOneIsNext} = this.state;
+        if (!playerOneIsNext) {
+            this.waitPlayerTwo();
+        }
+    }
+
+    waitPlayerTwo = () => {
+        const {squares} = this.state;
+        let botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
+        while (squares[botRandomPosition] === PLANE_ONE_DEAD ||
+            squares[botRandomPosition] === PLANE_TWO_DEAD ||
+            squares[botRandomPosition] === PLANE_TWO_ALIVE ||
+            squares[botRandomPosition] === PLANE_ONE_MISSED ||
+            squares[botRandomPosition] === PLANE_TWO_MISSED
+            ) {
+            botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
+        }
+        setTimeout(() => this.handlePlayerTwoTurn(botRandomPosition), 100);
+    };
+
     calculateWinner = () => {
         const {squares, setPlaneTurnLeft} = this.state;
 
@@ -114,10 +135,10 @@ class Board extends Component {
         let playerTwoDeadPlaneCount = 0;
 
         for (let i = 0; i < FIELD_WIDTH * FIELD_HEIGHT - 1; i++) {
-            if (squares[i] == PLANE_ONE_DEAD) {
+            if (squares[i] === PLANE_ONE_DEAD) {
                 playerOneDeadPlaneCount += 1;
             }
-            if (squares[i] == PLANE_TWO_DEAD) {
+            if (squares[i] === PLANE_TWO_DEAD) {
                 playerTwoDeadPlaneCount += 1;
             }
         }
@@ -126,7 +147,7 @@ class Board extends Component {
         if (playerTwoDeadPlaneCount >= MAX_PLANE) return 'Player One Win';
 
         return null;
-    }
+    };
 
     handleClick(i) {
         const {playerOneIsNext, setPlaneTurnLeft} = this.state;
@@ -134,6 +155,9 @@ class Board extends Component {
         let announceMessage = '';
         // neu co nguoi thang => game over
         if (this.calculateWinner()) {
+            return;
+        }
+        if (!playerOneIsNext) {
             return;
         }
 
@@ -170,7 +194,7 @@ class Board extends Component {
             // shooting phase player 1
             else {
                 if (squares[i] === PLANE_TWO_ALIVE || squares[i] === PLANE_TWO_EXPOSED){
-                        squares[i] = PLANE_TWO_DEAD;
+                    squares[i] = PLANE_TWO_DEAD;
                     announceMessage = `Shot HIT!!\nA plane of player2 has been terminated`;
                 }
                 else if (squares[i] === PLANE_ONE_ALIVE || squares[i] === PLANE_ONE_EXPOSED){
@@ -193,8 +217,29 @@ class Board extends Component {
                 }
             }
         }
+
+        this.setState({
+            squares: squares,
+            playerOneIsNext: !this.state.playerOneIsNext,
+            setPlaneTurnLeft: setPlaneTurnLeft - 1,
+            announce: announceMessage
+        });
+    }
+
+    handlePlayerTwoTurn(i) {
+        const {playerOneIsNext, setPlaneTurnLeft} = this.state;
+        const squares = this.state.squares.slice();
+        let announceMessage = '';
+        // neu co nguoi thang => game over
+        if (this.calculateWinner()) {
+            return;
+        }
+        if (playerOneIsNext) {
+            return;
+        }
+
         /* player 2's turn */
-        else {
+        if (!playerOneIsNext) {
             if (setPlaneTurnLeft > 0) {
                 if (squares[i] === null) {
                     squares[i] = PLANE_TWO_ALIVE;
