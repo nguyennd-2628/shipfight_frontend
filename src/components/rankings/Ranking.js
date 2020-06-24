@@ -57,7 +57,7 @@ class Ranking extends Component {
     componentDidMount() {
         axios.get(`https://battle-ship-back-end-2020.herokuapp.com/users`)
             .then(res => {
-                const users = res.data.userName;  
+                const users = res.data.userName.filter(user => (user.role === 'user'));  
                 users.sort((a, b) => a.ranking_point - b.ranking_point).reverse();
                 this.setState({ users });
 
