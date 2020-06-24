@@ -20,7 +20,8 @@ class HasInvite extends Component {
             visible: false,
             matchingSuccess: false,
             host: null,
-            host_socketId: ''
+            host_socketId: '',
+            turn: false
         }
         props.socket.on('s2c_loi_moi', data => {
             this.setState({
@@ -29,13 +30,13 @@ class HasInvite extends Component {
                 host_socketId: data.host_socketId
             })
         })
-        props.socket.on('s2c_phan_hoi',(data)=>{
-            if(data.success === 1){
+        props.socket.on('s2c_phan_hoi', (data) => {
+            if (data.success === 1) {
                 this.setState({
                     matchingSuccess: true
                 })
             }
-            else{
+            else {
                 notification.open({
                     type: 'error',
                     message: 'Invite is canceled',
@@ -43,7 +44,7 @@ class HasInvite extends Component {
                     duration: 2
                 });
                 this.setState({
-                    visible : false
+                    visible: false
                 })
             }
         })
@@ -64,7 +65,15 @@ class HasInvite extends Component {
         });
     };
     render() {
-        if(this.state.matchingSuccess) return <Redirect to="/game-play" />
+        if (this.state.matchingSuccess)
+            return <Redirect to={{
+                pathname: '/game-play',
+                state: {
+                    enemySocketId: this.state.host_socketId,
+                    enemyInfor: this.state.host,
+                    turn: this.state.turn
+                }
+            }} />
         return (
             <div>
                 <Modal
@@ -73,7 +82,7 @@ class HasInvite extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >
-                    {(this.state.host===null)?'':this.state.host.name} - {(this.state.host===null)?'':this.state.host.ranking_point} sends his challenge to you
+                    {(this.state.host === null) ? '' : this.state.host.name} - {(this.state.host === null) ? '' : this.state.host.ranking_point} sends his challenge to you
                 </Modal>
             </div>
         );

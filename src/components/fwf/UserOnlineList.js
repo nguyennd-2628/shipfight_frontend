@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button , notification} from 'antd';
+import { Modal, Button, notification } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { SyncOutlined } from '@ant-design/icons';
 
@@ -19,7 +19,10 @@ class UserOnlineList extends Component {
             visible: false,
             waitingVisible: false,
             matchingSuccess: false,
-            usersOnline: []
+            usersOnline: [],
+            enemySocketId: null,
+            enemyInfor: null,
+            turn: true
         }
         props.socket.on('s2c_online_list', data => {
             this.setState({ usersOnline: data })
@@ -28,15 +31,15 @@ class UserOnlineList extends Component {
             if (data.success === 0) alert('failed to send an invitation to challenge');
             else {
                 this.setState({
-                    visible : false,
-                    waitingVisible : true
+                    visible: false,
+                    waitingVisible: true
                 })
             }
         })
         props.socket.on('s2c_chap_nhan', (data) => {
-            if (data.success === 1){
-                this.setState({ 
-                    matchingSuccess: true 
+            if (data.success === 1) {
+                this.setState({
+                    matchingSuccess: true
                 });
             }
             else {
@@ -47,8 +50,8 @@ class UserOnlineList extends Component {
                     duration: 2
                 });
                 this.setState({
-                    waitingVisible : false,
-                    visible : true
+                    waitingVisible: false,
+                    visible: true
                 })
             }
         })
@@ -75,10 +78,10 @@ class UserOnlineList extends Component {
         });
     };
 
-    handleWaitingCancel = e =>{       
+    handleWaitingCancel = e => {
         this.props.socket.emit('c2s_cancel_thach_dau')
         this.setState = {
-            visible :true,
+            visible: true,
             waitingVisible: false
         }
     }
@@ -86,11 +89,22 @@ class UserOnlineList extends Component {
     handleInvite = (e) => {
         var socketId = e.currentTarget.value;
         this.props.socket.emit('c2s_thach_dau', socketId);
-        this.setState({ visible: false });
+        var enemyInfor;
+        this.state.usersOnline.forEach((user) => {
+            if (user.socketId === socketId) {
+                enemyInfor = user.infor
+            }
+        })
+
+        this.setState({
+            enemyInfor,
+            enemySocketId: socketId,
+            visible: false
+        });
     }
 
     renderUsersOnline = () => {
-         const users = this.state.usersOnline.filter(user => {
+        const users = this.state.usersOnline.filter(user => {
             if (user.infor.email !== this.state.user.email && user.status === 1) return user;
             else return null;
         })
@@ -104,7 +118,15 @@ class UserOnlineList extends Component {
     }
 
     render() {
-        if(this.state.matchingSuccess) return <Redirect to='/game-play' />
+        if (this.state.matchingSuccess)
+            return <Redirect to={{
+                pathname: '/game-play',
+                state: {
+                    enemySocketId: this.state.enemySocketId,
+                    enemyInfor: this.state.enemyInfor,
+                    turn: this.state.turn
+                }
+            }} />
         return (
             <div>
                 <Button type="primary" onClick={this.showModal} block>
@@ -123,7 +145,7 @@ class UserOnlineList extends Component {
                     visible={this.state.waitingVisible}
                     onCancel={this.handleWaitingCancel}
                 >
-                    Waiting Player confirm   
+                    Waiting Player confirm
                     <SyncOutlined spin />
                 </Modal>
             </div>

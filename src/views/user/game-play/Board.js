@@ -93,23 +93,39 @@ class Board extends Component {
         let isAdmin = true;
         if( user === null) isAdmin = false;
         else if( user.role === 'user' ) isAdmin = false;
-
+        let enemySocketId = null;
+        let enemyInfor = null;
+        let playerOneIsNext = true;
+        if(props.location.state){        
+            enemySocketId = props.location.state.enemySocketId
+            enemyInfor = props.location.state.enemyInfor
+            if(!props.location.state.turn){
+                playerOneIsNext = false
+            }
+        }      
         this.state = {
             user,
             loggedIn,
             isAdmin,
+            enemySocketId,
+            enemyInfor,
             squares: Array(FIELD_WIDTH * FIELD_HEIGHT).fill(null),
-            playerOneIsNext: true,
+            playerOneIsNext,
             setPlaneTurnLeft: MAX_PLANE * 2,
             announce: ''
         }
+        props.socket.on('s2c_play_game',(data)=>{
+            if( data.success === 0 ){
+                alert(data.message)
+            }
+        })
+        props.socket.on('s2c_game_command',(data) => {
+            this.handlePlayerTwoTurn(data)
+        })
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {playerOneIsNext} = this.state;
-        if (!playerOneIsNext) {
-            this.waitPlayerTwo();
-        }
+    componentWillUnmount(){
+        this.props.socket.emit("c2s_end_game")
     }
 
     waitPlayerTwo = () => {
@@ -217,6 +233,12 @@ class Board extends Component {
                 }
             }
         }
+        
+        let dataToSend = {
+            enemySocketId : this.state.enemySocketId,
+            playCommand : i
+        }
+        this.props.socket.emit("c2s_play_game",dataToSend)
 
         this.setState({
             squares: squares,
@@ -302,7 +324,6 @@ class Board extends Component {
         });
     }
 
-
     RowItems(squares, i) {
         const items = [];
         for (let j = 0; j < FIELD_WIDTH; j++) {
@@ -343,9 +364,8 @@ class Board extends Component {
         if (winner) {
             status = 'Winner: ' + winner;
         } else {
-            status = 'Next player: ' + (playerOneIsNext ? 'Player One' : 'Player Two');
+            status = 'Next player: ' + (playerOneIsNext ? this.state.user.name : this.state.enemyInfor.name );
         }
-
         return (
             <Layout className="layout">
                 <NavBar />
