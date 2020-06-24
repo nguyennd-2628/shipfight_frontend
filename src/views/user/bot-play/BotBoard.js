@@ -103,6 +103,11 @@ class BotBoard extends Component {
             setPlaneTurnLeft: MAX_PLANE * 2,
             announce: ''
         }
+        
+    }
+
+    componentWillUnmount(){
+        this.props.socket.emit("c2s_end_game")
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -114,15 +119,15 @@ class BotBoard extends Component {
 
     waitPlayerTwo = () => {
         const {squares} = this.state;
-       let botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
-       while (squares[botRandomPosition] === PLANE_ONE_DEAD ||
+        let botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
+        while (squares[botRandomPosition] === PLANE_ONE_DEAD ||
            squares[botRandomPosition] === PLANE_TWO_DEAD ||
            squares[botRandomPosition] === PLANE_TWO_ALIVE ||
            squares[botRandomPosition] === PLANE_ONE_MISSED ||
            squares[botRandomPosition] === PLANE_TWO_MISSED
-       ) {
+        ){
            botRandomPosition = Math.floor(Math.random() * FIELD_WIDTH * FIELD_HEIGHT);
-       }
+        }
         setTimeout(() => this.handlePlayerTwoTurn(botRandomPosition), 100);
     };
 

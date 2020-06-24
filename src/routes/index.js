@@ -50,11 +50,11 @@ const Routes = () => (
             <Ranking />
         </Route>
 
-        <Route path='/game-play'>
-            <Board />
+        <Route path='/game-play' render = {props => <Board {...props} socket = {socket} />} >
+
         </Route>
         <Route path='/bot-play'>
-            <BotBoard />
+            <BotBoard socket={socket} />
         </Route>
 
         <Route path='/'>

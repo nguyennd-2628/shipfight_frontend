@@ -26,6 +26,10 @@ class App extends Component {
     if (loggedIn) props.socket.emit('c2s_online_alert', user);
   }
 
+  handlePlayVsBot = ()=>{
+    this.props.socket.emit('c2s_play_with_bot')
+  }
+  
   render() {
     if (!this.state.loggedIn)  return <Redirect to='/login' />
     else if (this.state.isAdmin)  return <Redirect to={{ pathname: '/admin/user-list' }} />
@@ -40,7 +44,7 @@ class App extends Component {
               <AutoMatching socket={this.props.socket} />
               <UserOnlineList socket={this.props.socket} />
               <Link to='/bot-play'>
-                <Button type="primary" block>
+                <Button type="primary" block onClick = {this.handlePlayVsBot}>
                   Fight with Bot
                 </Button>
               </Link>
