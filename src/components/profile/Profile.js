@@ -44,7 +44,7 @@ class Profile extends Component {
 				})
 		}
 		setTimeout(() => {
-			if (this.state.user !== null) {
+			if (this.state.user !== null ) {
 				axios.get('https://battle-ship-back-end-2020.herokuapp.com/games/allgame/' + id)
 					.then((res) => {
 						// console.log('all game: ', res.data.allGame)
@@ -52,7 +52,7 @@ class Profile extends Component {
 						var played = allGame.length;
 						var winRate = 0
 						if (played !== 0) {
-							winRate = ((this.state.user.ranking_point / 20) / played) * 100
+							winRate = Math.floor(((this.state.user.ranking_point / 20) / played) * 100)
 						}
 						this.setState({
 							gamePlayed: played,
@@ -62,6 +62,7 @@ class Profile extends Component {
 
 				axios.get('https://battle-ship-back-end-2020.herokuapp.com/games/alltime/' + id)
 					.then((res) => {
+						if(res.data.data[0].sum !== null){
 						var minutes = res.data.data[0].sum.minutes
 						var seconds = res.data.data[0].sum.seconds
 						var hours = 0
@@ -70,6 +71,7 @@ class Profile extends Component {
 							secondsPlay: seconds,
 							hourPlay: hours
 						})
+					}
 					})
 
 				axios.get(`https://battle-ship-back-end-2020.herokuapp.com/users`)
@@ -77,7 +79,7 @@ class Profile extends Component {
 						const users = res.data.userName;
 						users.sort((a, b) => a.ranking_point - b.ranking_point).reverse();
 						var ranking = 0;
-						if (this.state.user !== null) {
+						if (this.state.user !== null && this.state.user.role !== 'admin' ){
 							for (let i = 0; i < users.length; i++) {
 								if (users[i].id === this.state.user.id) {
 									ranking = i + 1;
